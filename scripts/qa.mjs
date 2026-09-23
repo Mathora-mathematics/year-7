@@ -30,7 +30,8 @@ for(const L of lessons){
   if((L.practiceSources||[]).length<(L.practice||[]).length) fail.push(label+': practice source tags misaligned');
   if(!String(L.context||'').trim()) fail.push(label+': missing contextual learning note');
   const qs=[...(L.practice||[]),...(L.homework||[])].map(x=>String(x).trim());
-  if(new Set(qs).size!==qs.length) fail.push(label+': duplicate practice/homework question');
+  const seen=new Map();
+  qs.forEach((q,i)=>{ if(seen.has(q)) fail.push(label+': duplicate question "'+q+'" at positions '+(seen.get(q)+1)+' and '+(i+1)); else seen.set(q,i); });
   const ans=[...(L.solutions?.starter||[]),...(L.solutions?.practice||[]),...(L.solutions?.homework||[])];
   if(ans.some(x=>x===undefined||x===null||String(x).trim()==='')) fail.push(label+': empty answer');
 }
