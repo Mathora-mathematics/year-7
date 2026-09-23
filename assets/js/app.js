@@ -1,7 +1,33 @@
 (() => {
   'use strict';
   const app = document.getElementById('app');
-  const lessons = () => window.NES_LESSONS || [];
+  let lessonsPrepared=false;
+  function prepareLessons(){
+    if(lessonsPrepared) return;
+    const data=window.NES_LESSONS||[];
+    data.forEach(L=>{
+      L.watch=(L.watch||[]).map(x=>String(x||'')
+        .replace(/[\u0000-\u001f]+/g,' ')
+        .replace(/\s*BOOK-TO-BOOK PROGRESSION.*$/i,'')
+        .replace(/\s*∑\s*x²\s*=\s*\?\s*/g,' ')
+        .replace(/\s+same-sized parts\s*$/i,'')
+        .replace(/\s+/g,' ').trim());
+    });
+    const L=data.find(x=>x.lesson===1);
+    if(L){
+      L.practice[14]='Work out (31,762 - 734×44) ÷ 44.';
+      L.solutions.practice[14]='-12';
+      L.practice[17]='Work out (69,169 - 679×34) ÷ 34. Give the quotient and remainder.';
+      L.solutions.practice[17]='1355 remainder 13';
+      L.homework[10]='Work out (44,625 - 890×25) ÷ 25.';
+      L.solutions.homework[10]='895';
+      L.solutions.examples[0].method='Align place values, add from right to left, and regroup when a column totals 10 or more. Estimate first to check the size of the answer.';
+      L.solutions.examples[1].method='Multiply to find the total delivered, then subtract the items used. Check that the final answer is smaller than the delivery total.';
+      L.solutions.examples[2].method='Use dividend = divisor × quotient + remainder. The remainder must be smaller than the divisor.';
+    }
+    lessonsPrepared=true;
+  }
+  const lessons = () => { prepareLessons(); return window.NES_LESSONS || []; };
   const state = { lesson:null, slide:0, showAnswers:false, overlay:null, board:null, unit:'All', query:'' };
   const icons={
     search:`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="11" cy="11" r="7"/><path d="m20 20-4-4"/></svg>`,
@@ -22,11 +48,12 @@
     // common simple fractions, including 3/4x -> stacked 3/4 followed by x
     s=s.replace(/(^|[^\w])(-?\d+|[A-Za-z])\/(\d+)(?=\s|[A-Za-z]|[.,;:)\]]|$)/g,(m,p,a,b)=>`${p}<span class="math-frac"><span class="top">${a}</span><span class="bottom">${b}</span></span>`);
     s=s.replace(/\b([A-Za-z])\/(\d+)\b/g,(m,a,b)=>`<span class="math-frac"><span class="top">${a}</span><span class="bottom">${b}</span></span>`);
+    s=s.replace(/([A-Za-z0-9)]+)\^(−?-?\d+)/g,'$1<sup>$2</sup>');
     return s;
   }
   function unitShort(u=''){return u.replace(/^Unit \d+ - /,'').replace(/^Unit \d+ /,'').replace(/^U 12 /,'');}
   function sourceChip(label){return `<span class="question-source">${esc(label)}</span>`;}
-  function logo(){return `<img class="slide-logo" src="assets/images/nes-logo.png" alt="New English School logo"/>`;}
+  function logo(){return `<img class="slide-logo" src="assets/images/nes-logo.svg" alt="New English School logo"/>`;}
   function slideMeta(L,section){return `<div class="slide-meta"><div class="meta-left"><span>Year 7 Mathematics</span><span>${esc(L.code)}</span><span>${esc(section)}</span></div><span>New English School</span></div>`;}
   function footerKicker(L,section){return `<div class="slide-kicker">${esc(section)} · Lesson ${L.lesson}</div>`;}
   function diagram(L,variant=0){return L.diagram && window.NES_DIAGRAMS ? window.NES_DIAGRAMS.render(L.diagram,variant) : ''}
@@ -48,8 +75,8 @@
 
     L.examples.forEach((ex,i)=>{
       const sol=L.solutions.examples[i]||{};
-      const visual=diagram(L,i+1);
-      s.push({label:`Example ${i+1}`,html:`<section class="slide">${logo()}${footerKicker(L,`Worked example ${i+1}`)}<h2>Example ${i+1}</h2><p class="slide-sub">${esc(ex.level)}</p><div class="example-layout"><div class="example-main"><div class="example-q">${mathHTML(ex.question)}</div><div class="working-grid"></div></div><div class="example-side"><span class="source-pill">${esc(ex.level)}</span>${visual?`<div class="diagram-wrap">${visual}</div>`:`<div class="panel"><h4>Teaching lens</h4><p>${mathHTML(L.learning[Math.min(i,L.learning.length-1)]||L.objective)}</p></div>`}<div class="panel soft"><h4>Textbook source</h4><p>${esc(ex.source)}</p></div><div class="solution-box"><strong>Answer</strong><div class="solution-answer">${mathHTML(sol.answer||'')}</div><div class="solution-method">${esc(sol.method||'')}</div></div></div></div>${slideMeta(L,'Worked example')}</section>`});
+      const visual=diagram(L,i+1); const purpose=['Fluency & structure','Application & stretch','Reasoning & synthesis'][i]||'Worked example';
+      s.push({label:`Example ${i+1}`,html:`<section class="slide">${logo()}${footerKicker(L,`Worked example ${i+1}`)}<h2>Example ${i+1}</h2><p class="slide-sub">${esc(ex.level)} · ${purpose}</p><div class="example-layout"><div class="example-main"><div class="example-q">${mathHTML(ex.question)}</div><div class="working-grid"></div></div><div class="example-side"><span class="source-pill">${esc(ex.level)}</span>${visual?`<div class="diagram-wrap">${visual}</div>`:`<div class="panel"><h4>Teaching lens</h4><p>${mathHTML(L.learning[Math.min(i,L.learning.length-1)]||L.objective)}</p></div>`}<div class="panel soft"><h4>Textbook source</h4><p>${esc(ex.source)}</p></div><div class="solution-box"><strong>Answer</strong><div class="solution-answer">${mathHTML(sol.answer||'')}</div><div class="solution-method">${esc(sol.method||'')}</div></div></div></div>${slideMeta(L,'Worked example')}</section>`});
     });
 
     for(let g=0;g<4;g++){
@@ -81,7 +108,7 @@
     const units=['All',...new Set(all.map(x=>x.unit))];
     const q=state.query.toLowerCase().trim();
     const filtered=all.filter(L=>(state.unit==='All'||L.unit===state.unit) && (!q || `${L.lesson} ${L.code} ${L.title} ${L.objective} ${L.unit}`.toLowerCase().includes(q)));
-    app.innerHTML=`<div class="app-shell"><header class="topbar"><div class="brand"><img src="assets/images/nes-logo.png" alt="NES logo"><div><div class="brand-title">NES Mathematics</div><span class="brand-sub">Year 7 · Interactive course</span></div></div><div class="topbar-spacer"></div><button class="text-btn" data-action="random">Random lesson</button></header><main class="home"><section class="hero"><div><div class="eyebrow">2026–27 Scheme of Work</div><h1>Year 7 Mathematics</h1><p>A complete interactive lesson library built from the school scheme of work and both Cambridge Checkpoint Stage 7 and Stage 8 coursebooks. Each lesson combines explicit teaching, precise notation, visual models, worked examples, progressive practice, homework and full solutions.</p></div><aside class="hero-aside"><div class="hero-metric"><strong>70</strong><span>scheme-aligned lessons</span></div><div class="hero-metric"><strong>2</strong><span>Cambridge books deliberately blended</span></div><div class="hero-metric"><strong>32</strong><span>practice + homework questions per lesson</span></div></aside></section><div class="controls-row"><label class="search">${icons.search}<input id="searchInput" type="search" value="${esc(state.query)}" placeholder="Search a topic, code or skill…" autocomplete="off"></label><div class="chips">${units.map(u=>`<button class="chip ${state.unit===u?'active':''}" data-unit="${esc(u)}">${esc(u==='All'?'All units':unitShort(u))}</button>`).join('')}</div></div><div class="section-head"><h2>${state.unit==='All'?'Complete lesson library':unitShort(state.unit)}</h2><span>${filtered.length} lesson${filtered.length===1?'':'s'}</span></div>${filtered.length?`<div class="lesson-grid">${filtered.map(L=>`<article class="lesson-card" tabindex="0" role="button" data-lesson="${L.lesson}"><div class="lesson-top"><span class="lesson-no">Lesson ${String(L.lesson).padStart(2,'0')}</span><span class="lesson-code">${esc(L.code)}</span></div><h3>${esc(L.title)}</h3><p>${esc(L.objective)}</p><div class="card-foot">Open lesson ${icons.arrow}</div></article>`).join('')}</div>`:`<div class="empty-state">No lessons match that search.</div>`}</main></div>`;
+    app.innerHTML=`<div class="app-shell"><header class="topbar"><div class="brand"><img src="assets/images/nes-logo.svg" alt="NES logo"><div><div class="brand-title">NES Mathematics</div><span class="brand-sub">Year 7 · Interactive course</span></div></div><div class="topbar-spacer"></div><button class="text-btn" data-action="random">Random lesson</button></header><main class="home"><section class="hero"><div><div class="eyebrow">2026–27 Scheme of Work</div><h1>Year 7 Mathematics</h1><p>A complete interactive lesson library aligned to the school scheme of work and deliberately blended from Cambridge Checkpoint Stage 7 and Stage 8. Lessons move from explicit teaching to visual models, varied worked examples, progressive practice, homework and full solutions.</p></div><aside class="hero-aside"><div class="hero-metric"><strong>70</strong><span>scheme-aligned lessons</span></div><div class="hero-metric"><strong>2</strong><span>Cambridge books deliberately blended</span></div><div class="hero-metric"><strong>32+</strong><span>practice and homework questions per lesson</span></div></aside></section><div class="controls-row"><label class="search">${icons.search}<input id="searchInput" type="search" value="${esc(state.query)}" placeholder="Search a topic, code or skill…" autocomplete="off"></label><div class="chips">${units.map(u=>`<button class="chip ${state.unit===u?'active':''}" data-unit="${esc(u)}">${esc(u==='All'?'All units':unitShort(u))}</button>`).join('')}</div></div><div class="section-head"><h2>${state.unit==='All'?'Complete lesson library':unitShort(state.unit)}</h2><span>${filtered.length} lesson${filtered.length===1?'':'s'}</span></div>${filtered.length?`<div class="lesson-grid">${filtered.map(L=>`<article class="lesson-card" tabindex="0" role="button" data-lesson="${L.lesson}"><div class="lesson-top"><span class="lesson-no">Lesson ${String(L.lesson).padStart(2,'0')}</span><span class="lesson-code">${esc(L.code)}</span></div><h3>${esc(L.title)}</h3><p>${esc(L.objective)}</p><div class="card-foot">Open lesson ${icons.arrow}</div></article>`).join('')}</div>`:`<div class="empty-state">No lessons match that search.</div>`}</main></div>`;
     bindHome();
   }
 
