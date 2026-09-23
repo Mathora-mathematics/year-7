@@ -396,3 +396,14 @@ a{color:inherit}
   .progression-road{grid-template-columns:1fr;overflow:auto}.progression-arrow{display:none}.progression-step{height:auto;min-height:130px}
   .practice-three .question-text{font-size:19px}.practice-three .question-card{min-height:96px}
 }
+
+.homework-three{grid-template-columns:1fr!important;gap:12px;margin-top:16px;overflow:visible}
+.homework-three .question-card{min-height:128px;padding:17px 12px 14px 58px}
+.homework-three .question-card .qno{width:38px;height:38px;top:16px;font-size:13px}
+.homework-three .question-text{font-size:25px;line-height:1.38}
+.homework-three .answer{font-size:17px}
+.guided-three .question-card{background:linear-gradient(90deg,rgba(0,169,220,.025),rgba(255,255,255,0))}
+@media (max-height:820px) and (min-width:800px){
+ .homework-three .question-card{min-height:96px;padding-top:11px;padding-bottom:10px}
+ .homework-three .question-card .qno{top:11px}.homework-three .question-text{font-size:20px}
+}
