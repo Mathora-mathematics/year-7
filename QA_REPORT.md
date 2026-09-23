@@ -33,3 +33,16 @@ The repository now includes automated GitHub Actions QA. The validation checks:
 - No exact duplicate question within a lesson's practice/homework bank.
 
 The enrichment layer was designed from the supplied Stage 7 and Stage 8 coursebook patterns: fluency, representation, contextual application, reverse problems, error spotting, explanation, comparison and open reasoning. It adapts these structures rather than redistributing textbook pages.
+
+
+## Textbook integration and working-grid upgrade
+
+- All 70 lessons now have a Stage 7 and Stage 8 printed-page mapping.
+- The website reads the supplied coursebook PDFs locally in the browser using PDF.js and IndexedDB.
+- The exact mapped book page is rendered inside the lesson and the worked-example region is automatically detected/cropped from the page.
+- A full-page viewer is available if the teacher wants the surrounding textbook context.
+- The full textbook files are not committed to the public repository.
+- Worked examples now include a direct pen canvas over the squared teacher-working grid with colour, undo and clear controls.
+- Detailed revealed solutions use topic-specific multi-step teaching routines rather than answer-only feedback.
+- Practice is split into 4 questions per slide and solution pages are split further to maximise classroom font size.
+- Automated QA validates all 70 textbook mappings as well as lesson/question/answer alignment.
