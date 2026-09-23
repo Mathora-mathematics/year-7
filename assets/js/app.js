@@ -138,42 +138,46 @@
 
     s.push({label:'Book blend',html:`<section class="slide">${logo()}${footerKicker(L,'Textbook blend')}<h2>Stage 7 → Stage 8</h2><p class="slide-sub">The lesson uses the Stage 7 book for secure foundations, then deliberately draws on Stage 8 for stretch, richer notation and less-routine reasoning.</p><div class="two-col equal"><div><div class="source-card"><span class="source-label">Cambridge Checkpoint · Stage 7</span><h3>Foundation</h3><p>${esc(L.stage7)}</p></div><div class="source-card"><span class="source-label">Scheme of work</span><h3>Alignment</h3><p>${esc(L.sow_refs || 'School scheme of work alignment')}</p></div></div><div><div class="source-card"><span class="source-label">Cambridge Checkpoint · Stage 8</span><h3>Stretch</h3><p>${esc(L.stage8)}</p></div><div class="source-card"><span class="source-label">Practice design</span><h3>Diversity</h3><p>Core questions secure Stage 7 fluency; the middle section increases structure and representation; the final set blends Stage 8-style application, reverse problems, error analysis and open reasoning.</p></div></div></div>${slideMeta(L,'Sources & progression')}</section>`});
 
+    s.push({label:'Stage 7 source',html:bookSourceSlide(L,7)});
+    s.push({label:'Stage 8 source',html:bookSourceSlide(L,8)});
+
     L.examples.forEach((ex,i)=>{
       const sol=L.solutions.examples[i]||{};
       const visual=diagram(L,i+1); const purpose=['Fluency & structure','Application & stretch','Reasoning & synthesis'][i]||'Worked example';
-      s.push({label:`Example ${i+1}`,html:`<section class="slide">${logo()}${footerKicker(L,`Worked example ${i+1}`)}<h2>Example ${i+1}</h2><p class="slide-sub">${esc(ex.level)} · ${purpose}</p><div class="example-layout"><div class="example-main"><div class="example-q">${mathHTML(ex.question)}</div><div class="working-grid"></div></div><div class="example-side"><span class="source-pill">${esc(ex.level)}</span>${visual?`<div class="diagram-wrap">${visual}</div>`:`<div class="panel"><h4>Teaching lens</h4><p>${mathHTML(L.learning[Math.min(i,L.learning.length-1)]||L.objective)}</p></div>`}<div class="panel soft"><h4>Textbook source</h4><p>${esc(ex.source)}</p></div><button class="reveal-btn example-reveal" data-reveal aria-expanded="false">Show solution</button><div class="solution-box"><strong>Answer</strong><div class="solution-answer">${mathHTML(sol.answer||'')}</div><div class="solution-method">${mathHTML(sol.method||'')}</div></div></div></div>${slideMeta(L,'Worked example')}</section>`});
+      const steps=solutionSteps(L,ex,sol);
+      s.push({label:`Example ${i+1}`,html:`<section class="slide">${logo()}${footerKicker(L,`Worked example ${i+1}`)}<h2>Example ${i+1}</h2><p class="slide-sub">${esc(ex.level)} · ${purpose}</p><div class="example-layout"><div class="example-main"><div class="example-q">${mathHTML(ex.question)}</div>${interactiveGrid(`L${L.lesson}-E${i+1}`)}</div><div class="example-side"><span class="source-pill">${esc(ex.level)}</span>${visual?`<div class="diagram-wrap">${visual}</div>`:`<div class="panel"><h4>Teaching lens</h4><p>${mathHTML(L.learning[Math.min(i,L.learning.length-1)]||L.objective)}</p></div>`}<div class="panel soft"><h4>Textbook source</h4><p>${esc(ex.source)}</p></div><button class="reveal-btn example-reveal" data-reveal aria-expanded="false">Show detailed solution</button><div class="solution-box"><strong>Answer</strong><div class="solution-answer">${mathHTML(sol.answer||'')}</div><ol class="worked-steps">${steps.map((st,k)=>`<li><b>Step ${k+1}</b><span>${mathHTML(st)}</span></li>`).join('')}</ol></div></div></div>${slideMeta(L,'Worked example')}</section>`});
     });
 
-    const practiceGroupSize=Math.ceil(L.practice.length/4);
+    const practiceGroupSize=4;
     const practiceTitles=['Core fluency','Mixed fluency & structure','Application & Stage 8 stretch','Reasoning, reverse & open challenge'];
     for(let start=0,g=0;start<L.practice.length;start+=practiceGroupSize,g++){
       const end=Math.min(start+practiceGroupSize,L.practice.length);
       const cards=L.practice.slice(start,end).map((q,j)=>{const idx=start+j;return `<div class="question-card"><span class="qno">${idx+1}</span><div class="question-text">${mathHTML(q)}</div>${sourceChip(L.practiceSources[idx]||'Source-blended practice')}<button class="reveal-btn" data-reveal aria-expanded="false">Show solution</button><div class="answer">${mathHTML(L.solutions.practice[idx])}</div></div>`}).join('');
       const subtitle=practiceTitles[g]||'Extended practice';
-      s.push({label:`Practice ${g+1}`,html:`<section class="slide">${logo()}${footerKicker(L,'Independent practice')}<h2>${subtitle}</h2><p class="slide-sub">Questions ${start+1}–${end} of ${L.practice.length} · progressive, contextual and source-blended.</p><div class="question-grid">${cards}</div>${slideMeta(L,`Practice ${g+1}/4`)}</section>`});
+      s.push({label:`Practice ${g+1}`,html:`<section class="slide">${logo()}${footerKicker(L,'Independent practice')}<h2>${subtitle}</h2><p class="slide-sub">Questions ${start+1}–${end} of ${L.practice.length} · progressive, contextual and source-blended.</p><div class="question-grid">${cards}</div>${slideMeta(L,`Practice ${g+1}/${Math.ceil(L.practice.length/practiceGroupSize)}`)}</section>`});
     }
 
-    const homeworkGroupSize=Math.ceil(L.homework.length/3);
+    const homeworkGroupSize=4;
     for(let start=0,g=0;start<L.homework.length;start+=homeworkGroupSize,g++){
       const end=Math.min(start+homeworkGroupSize,L.homework.length);
       const cards=L.homework.slice(start,end).map((q,j)=>{const idx=start+j;return `<div class="question-card"><span class="qno">${idx+1}</span><div class="question-text">${mathHTML(q)}</div><button class="reveal-btn" data-reveal aria-expanded="false">Show solution</button><div class="answer">${mathHTML(L.solutions.homework[idx])}</div></div>`}).join('');
-      s.push({label:`Homework ${g+1}`,html:`<section class="slide">${logo()}${footerKicker(L,'Homework')}<h2>Homework</h2><p class="slide-sub">Questions ${start+1}–${end} of ${L.homework.length} · matched to the lesson, with fluency, application and reasoning.</p><div class="question-grid four">${cards}</div>${slideMeta(L,`Homework ${g+1}/3`)}</section>`});
+      s.push({label:`Homework ${g+1}`,html:`<section class="slide">${logo()}${footerKicker(L,'Homework')}<h2>Homework</h2><p class="slide-sub">Questions ${start+1}–${end} of ${L.homework.length} · matched to the lesson, with fluency, application and reasoning.</p><div class="question-grid four">${cards}</div>${slideMeta(L,`Homework ${g+1}/${Math.ceil(L.homework.length/homeworkGroupSize)}`)}</section>`});
     }
 
     const exRows=L.solutions.examples.map((e,i)=>`<div class="solution-row"><b>E${i+1}</b><span>${mathHTML(e.answer)}<br><small>${esc(e.method)}</small></span></div>`).join('');
     const stRows=L.solutions.starter.map((a,i)=>`<div class="solution-row"><b>S${i+1}</b><span>${mathHTML(a)}</span></div>`).join('');
     s.push({label:'Solutions · Start',html:`<section class="slide">${logo()}${footerKicker(L,'Solutions')}<h2>Starter & examples</h2><p class="slide-sub">Teacher-facing answer bank with concise methods.</p><div class="solutions-scroll">${stRows}${exRows}</div>${slideMeta(L,'Solutions I')}</section>`});
-    const practiceAnswerSize=Math.ceil(L.solutions.practice.length/2);
+    const practiceAnswerSize=6;
     for(let start=0,g=0;start<L.solutions.practice.length;start+=practiceAnswerSize,g++){
       const end=Math.min(start+practiceAnswerSize,L.solutions.practice.length);
       const pRows=L.solutions.practice.slice(start,end).map((a,j)=>`<div class="solution-row"><b>${start+j+1}</b><span>${mathHTML(a)}</span></div>`).join('');
-      s.push({label:`Solutions · Practice ${g+1}`,html:`<section class="slide">${logo()}${footerKicker(L,'Solutions')}<h2>Independent practice answers</h2><p class="slide-sub">Questions ${start+1}–${end} of ${L.solutions.practice.length}. Individual solutions can also be revealed beside each question during teaching.</p><div class="solutions-scroll">${pRows}</div>${slideMeta(L,`Solutions II · ${g+1}/2`)}</section>`});
+      s.push({label:`Solutions · Practice ${g+1}`,html:`<section class="slide">${logo()}${footerKicker(L,'Solutions')}<h2>Independent practice answers</h2><p class="slide-sub">Questions ${start+1}–${end} of ${L.solutions.practice.length}. Individual solutions can also be revealed beside each question during teaching.</p><div class="solutions-scroll">${pRows}</div>${slideMeta(L,`Solutions II · ${g+1}/${Math.ceil(L.solutions.practice.length/practiceAnswerSize)}`)}</section>`});
     }
-    const homeworkAnswerSize=Math.ceil(L.solutions.homework.length/2);
+    const homeworkAnswerSize=7;
     for(let start=0,g=0;start<L.solutions.homework.length;start+=homeworkAnswerSize,g++){
       const end=Math.min(start+homeworkAnswerSize,L.solutions.homework.length);
       const hRows=L.solutions.homework.slice(start,end).map((a,j)=>`<div class="solution-row"><b>${start+j+1}</b><span>${mathHTML(a)}</span></div>`).join('');
-      s.push({label:`Solutions · Homework ${g+1}`,html:`<section class="slide">${logo()}${footerKicker(L,'Solutions')}<h2>Homework answers</h2><p class="slide-sub">Questions ${start+1}–${end} of ${L.solutions.homework.length}.</p><div class="solutions-scroll">${hRows}</div>${slideMeta(L,`Solutions III · ${g+1}/2`)}</section>`});
+      s.push({label:`Solutions · Homework ${g+1}`,html:`<section class="slide">${logo()}${footerKicker(L,'Solutions')}<h2>Homework answers</h2><p class="slide-sub">Questions ${start+1}–${end} of ${L.solutions.homework.length}.</p><div class="solutions-scroll">${hRows}</div>${slideMeta(L,`Solutions III · ${g+1}/${Math.ceil(L.solutions.homework.length/homeworkAnswerSize)}`)}</section>`});
     }
     return s;
   }
