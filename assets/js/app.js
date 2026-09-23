@@ -5,6 +5,7 @@
   function prepareLessons(){
     if(lessonsPrepared) return;
     const data=window.NES_LESSONS||[];
+    window.NES_ENRICH?.apply(data);
     data.forEach(L=>{
       L.watch=(L.watch||[]).map(x=>String(x||'')
         .replace(/[\u0000-\u001f]+/g,' ')
@@ -45,10 +46,16 @@
   function esc(s=''){return String(s).replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#039;"}[m]));}
   function mathHTML(text=''){
     let s=esc(text);
-    // common simple fractions, including 3/4x -> stacked 3/4 followed by x
-    s=s.replace(/(^|[^\w])(-?\d+|[A-Za-z])\/(\d+)(?=\s|[A-Za-z]|[.,;:)\]]|$)/g,(m,p,a,b)=>`${p}<span class="math-frac"><span class="top">${a}</span><span class="bottom">${b}</span></span>`);
-    s=s.replace(/\b([A-Za-z])\/(\d+)\b/g,(m,a,b)=>`<span class="math-frac"><span class="top">${a}</span><span class="bottom">${b}</span></span>`);
-    s=s.replace(/([A-Za-z0-9)]+)\^(−?-?\d+)/g,'$1<sup>$2</sup>');
+    // Mixed numbers first so "3 1/2" stays visually grouped.
+    s=s.replace(/(^|[^\w.])(-?\d+)\s+(\d+)\/(\d+)(?=\s|[A-Za-z]|[.,;:)\]]|$)/g,
+      (m,p,w,a,b)=>`${p}<span class="mixed-number"><span class="whole">${w}</span><span class="math-frac"><span class="top">${a}</span><span class="bottom">${b}</span></span></span>`);
+    // Common simple fractions, including 3/4x -> stacked 3/4 followed by x.
+    s=s.replace(/(^|[^\w])(-?\d+|[A-Za-z])\/(\d+)(?=\s|[A-Za-z]|[.,;:)\]]|$)/g,
+      (m,p,a,b)=>`${p}<span class="math-frac"><span class="top">${a}</span><span class="bottom">${b}</span></span>`);
+    s=s.replace(/\b([A-Za-z])\/(\d+)\b/g,
+      (m,a,b)=>`<span class="math-frac"><span class="top">${a}</span><span class="bottom">${b}</span></span>`);
+    s=s.replace(/([A-Za-z0-9)\]])\^(−?-?\d+)/g,'$1<sup>$2</sup>');
+    s=s.replace(/([A-Za-z0-9)\]])²/g,'$1<sup>2</sup>').replace(/([A-Za-z0-9)\]])³/g,'$1<sup>3</sup>');
     return s;
   }
   function unitShort(u=''){return u.replace(/^Unit \d+ - /,'').replace(/^Unit \d+ /,'').replace(/^U 12 /,'');}
@@ -62,34 +69,37 @@
     const s=[];
     s.push({label:'Cover',html:`<section class="slide cover-slide">${logo()}${footerKicker(L,'Year 7 / Mathematics')}<h1>${esc(L.title)}</h1><p class="objective">${esc(L.objective)}</p><div class="cover-mark">${esc(L.lesson.toString().padStart(2,'0'))}</div>${slideMeta(L,'Lesson')}</section>`});
 
-    const starterCards=L.starter.map((q,i)=>`<div class="question-card"><span class="qno">${i+1}</span><div class="question-text">${mathHTML(q)}</div><div class="answer">${mathHTML(L.solutions.starter[i])}</div></div>`).join('');
+    const starterCards=L.starter.map((q,i)=>`<div class="question-card"><span class="qno">${i+1}</span><div class="question-text">${mathHTML(q)}</div><button class="reveal-btn" data-reveal aria-expanded="false">Show solution</button><div class="answer">${mathHTML(L.solutions.starter[i])}</div></div>`).join('');
     s.push({label:'Starter',html:`<section class="slide">${logo()}${footerKicker(L,'Retrieval starter')}<h2>Starter</h2><p class="slide-sub">Four prerequisite or previous-learning questions. Keep answers hidden until you are ready to check.</p><div class="question-grid four">${starterCards}</div>${slideMeta(L,'Starter')}</section>`});
 
     const learnItems=L.learning.slice(0,4).map((x,i)=>`<li data-n="${i+1}">${mathHTML(x)}</li>`).join('');
     s.push({label:'Learn · Core',html:`<section class="slide">${logo()}${footerKicker(L,'Learn')}<h2>Core ideas</h2><p class="slide-sub">The concepts students should have clear before the examples.</p><div class="two-col"><div class="panel"><h4>What you need to know</h4><ol class="list">${learnItems}</ol></div><div class="diagram-wrap">${diagram(L,0) || `<div class="panel dark"><h4>Focus</h4><p>${esc(L.objective)}</p></div>`}</div></div>${slideMeta(L,'Learning content I')}</section>`});
 
     const watch=L.watch.slice(0,4).map((x,i)=>`<div class="watch"><span class="watch-badge">${i+1}</span><p>${mathHTML(x)}</p></div>`).join('');
-    s.push({label:'Learn · Notation',html:`<section class="slide">${logo()}${footerKicker(L,'Connect')}<h2>Notation, structure & pitfalls</h2><p class="slide-sub">Precision matters: read the structure before calculating.</p><div class="two-col equal"><div class="panel soft"><h4>Watch for</h4><div class="watch-list">${watch}</div></div><div class="panel"><h4>Check before moving on</h4><div class="watch-list"><div class="watch"><span class="watch-badge">A</span><p>Can you explain the rule in a complete sentence?</p></div><div class="watch"><span class="watch-badge">B</span><p>Can you identify the notation that changes the meaning?</p></div><div class="watch"><span class="watch-badge">C</span><p>Can you estimate or reason-check the result?</p></div></div></div></div>${slideMeta(L,'Learning content II')}</section>`});
+    s.push({label:'Learn · Notation',html:`<section class="slide">${logo()}${footerKicker(L,'Connect')}<h2>Notation, structure & pitfalls</h2><p class="slide-sub">Precision matters: read the structure, connect it to meaning, then calculate.</p><div class="two-col equal"><div class="panel soft"><h4>Watch for</h4><div class="watch-list">${watch}</div></div><div class="panel"><h4>Why this matters</h4><p class="context-note">${esc(L.context||L.objective)}</p><div class="mini-checks"><span>Explain the rule</span><span>Read the notation</span><span>Reason-check the result</span></div></div></div>${slideMeta(L,'Learning content II')}</section>`});
 
-    s.push({label:'Book blend',html:`<section class="slide">${logo()}${footerKicker(L,'Textbook blend')}<h2>Stage 7 → Stage 8</h2><p class="slide-sub">The lesson uses the Stage 7 book for secure foundations, then deliberately draws on Stage 8 for stretch, richer notation and less-routine reasoning.</p><div class="two-col equal"><div><div class="source-card"><span class="source-label">Cambridge Checkpoint · Stage 7</span><h3>Foundation</h3><p>${esc(L.stage7)}</p></div><div class="source-card"><span class="source-label">Scheme of work</span><h3>Alignment</h3><p>${esc(L.sow_refs || 'School scheme of work alignment')}</p></div></div><div><div class="source-card"><span class="source-label">Cambridge Checkpoint · Stage 8</span><h3>Stretch</h3><p>${esc(L.stage8)}</p></div><div class="source-card"><span class="source-label">Practice design</span><h3>Diversity</h3><p>Questions 1–7 emphasise Stage 7 fluency; 8–14 use Stage 8-style extension; 15–20 move into reasoning, reverse problems and unfamiliar applications.</p></div></div></div>${slideMeta(L,'Sources & progression')}</section>`});
+    s.push({label:'Book blend',html:`<section class="slide">${logo()}${footerKicker(L,'Textbook blend')}<h2>Stage 7 → Stage 8</h2><p class="slide-sub">The lesson uses the Stage 7 book for secure foundations, then deliberately draws on Stage 8 for stretch, richer notation and less-routine reasoning.</p><div class="two-col equal"><div><div class="source-card"><span class="source-label">Cambridge Checkpoint · Stage 7</span><h3>Foundation</h3><p>${esc(L.stage7)}</p></div><div class="source-card"><span class="source-label">Scheme of work</span><h3>Alignment</h3><p>${esc(L.sow_refs || 'School scheme of work alignment')}</p></div></div><div><div class="source-card"><span class="source-label">Cambridge Checkpoint · Stage 8</span><h3>Stretch</h3><p>${esc(L.stage8)}</p></div><div class="source-card"><span class="source-label">Practice design</span><h3>Diversity</h3><p>Core questions secure Stage 7 fluency; the middle section increases structure and representation; the final set blends Stage 8-style application, reverse problems, error analysis and open reasoning.</p></div></div></div>${slideMeta(L,'Sources & progression')}</section>`});
 
     L.examples.forEach((ex,i)=>{
       const sol=L.solutions.examples[i]||{};
       const visual=diagram(L,i+1); const purpose=['Fluency & structure','Application & stretch','Reasoning & synthesis'][i]||'Worked example';
-      s.push({label:`Example ${i+1}`,html:`<section class="slide">${logo()}${footerKicker(L,`Worked example ${i+1}`)}<h2>Example ${i+1}</h2><p class="slide-sub">${esc(ex.level)} · ${purpose}</p><div class="example-layout"><div class="example-main"><div class="example-q">${mathHTML(ex.question)}</div><div class="working-grid"></div></div><div class="example-side"><span class="source-pill">${esc(ex.level)}</span>${visual?`<div class="diagram-wrap">${visual}</div>`:`<div class="panel"><h4>Teaching lens</h4><p>${mathHTML(L.learning[Math.min(i,L.learning.length-1)]||L.objective)}</p></div>`}<div class="panel soft"><h4>Textbook source</h4><p>${esc(ex.source)}</p></div><div class="solution-box"><strong>Answer</strong><div class="solution-answer">${mathHTML(sol.answer||'')}</div><div class="solution-method">${esc(sol.method||'')}</div></div></div></div>${slideMeta(L,'Worked example')}</section>`});
+      s.push({label:`Example ${i+1}`,html:`<section class="slide">${logo()}${footerKicker(L,`Worked example ${i+1}`)}<h2>Example ${i+1}</h2><p class="slide-sub">${esc(ex.level)} · ${purpose}</p><div class="example-layout"><div class="example-main"><div class="example-q">${mathHTML(ex.question)}</div><div class="working-grid"></div></div><div class="example-side"><span class="source-pill">${esc(ex.level)}</span>${visual?`<div class="diagram-wrap">${visual}</div>`:`<div class="panel"><h4>Teaching lens</h4><p>${mathHTML(L.learning[Math.min(i,L.learning.length-1)]||L.objective)}</p></div>`}<div class="panel soft"><h4>Textbook source</h4><p>${esc(ex.source)}</p></div><button class="reveal-btn example-reveal" data-reveal aria-expanded="false">Show solution</button><div class="solution-box"><strong>Answer</strong><div class="solution-answer">${mathHTML(sol.answer||'')}</div><div class="solution-method">${esc(sol.method||'')}</div></div></div></div>${slideMeta(L,'Worked example')}</section>`});
     });
 
-    for(let g=0;g<4;g++){
-      const start=g*5;
-      const cards=L.practice.slice(start,start+5).map((q,j)=>{const idx=start+j;return `<div class="question-card"><span class="qno">${idx+1}</span><div class="question-text">${mathHTML(q)}</div>${sourceChip(L.practiceSources[idx])}<div class="answer">${mathHTML(L.solutions.practice[idx])}</div></div>`}).join('');
-      const subtitle=g===0?'Core fluency':g===1?'Mixed fluency and structure':g===2?'Stage 8 stretch':'Reasoning and challenge';
-      s.push({label:`Practice ${g+1}`,html:`<section class="slide">${logo()}${footerKicker(L,'Independent practice')}<h2>${subtitle}</h2><p class="slide-sub">Questions ${start+1}–${start+5} of 20 · progressive and source-blended.</p><div class="question-grid">${cards}</div>${slideMeta(L,`Practice ${g+1}/4`)}</section>`});
+    const practiceGroupSize=Math.ceil(L.practice.length/4);
+    const practiceTitles=['Core fluency','Mixed fluency & structure','Application & Stage 8 stretch','Reasoning, reverse & open challenge'];
+    for(let start=0,g=0;start<L.practice.length;start+=practiceGroupSize,g++){
+      const end=Math.min(start+practiceGroupSize,L.practice.length);
+      const cards=L.practice.slice(start,end).map((q,j)=>{const idx=start+j;return `<div class="question-card"><span class="qno">${idx+1}</span><div class="question-text">${mathHTML(q)}</div>${sourceChip(L.practiceSources[idx]||'Source-blended practice')}<button class="reveal-btn" data-reveal aria-expanded="false">Show solution</button><div class="answer">${mathHTML(L.solutions.practice[idx])}</div></div>`}).join('');
+      const subtitle=practiceTitles[g]||'Extended practice';
+      s.push({label:`Practice ${g+1}`,html:`<section class="slide">${logo()}${footerKicker(L,'Independent practice')}<h2>${subtitle}</h2><p class="slide-sub">Questions ${start+1}–${end} of ${L.practice.length} · progressive, contextual and source-blended.</p><div class="question-grid">${cards}</div>${slideMeta(L,`Practice ${g+1}/4`)}</section>`});
     }
 
-    for(let g=0;g<3;g++){
-      const start=g*4;
-      const cards=L.homework.slice(start,start+4).map((q,j)=>{const idx=start+j;return `<div class="question-card"><span class="qno">${idx+1}</span><div class="question-text">${mathHTML(q)}</div><div class="answer">${mathHTML(L.solutions.homework[idx])}</div></div>`}).join('');
-      s.push({label:`Homework ${g+1}`,html:`<section class="slide">${logo()}${footerKicker(L,'Homework')}<h2>Homework</h2><p class="slide-sub">Questions ${start+1}–${start+4} of 12 · matched to the lesson but not simply copied from class practice.</p><div class="question-grid four">${cards}</div>${slideMeta(L,`Homework ${g+1}/3`)}</section>`});
+    const homeworkGroupSize=Math.ceil(L.homework.length/3);
+    for(let start=0,g=0;start<L.homework.length;start+=homeworkGroupSize,g++){
+      const end=Math.min(start+homeworkGroupSize,L.homework.length);
+      const cards=L.homework.slice(start,end).map((q,j)=>{const idx=start+j;return `<div class="question-card"><span class="qno">${idx+1}</span><div class="question-text">${mathHTML(q)}</div><button class="reveal-btn" data-reveal aria-expanded="false">Show solution</button><div class="answer">${mathHTML(L.solutions.homework[idx])}</div></div>`}).join('');
+      s.push({label:`Homework ${g+1}`,html:`<section class="slide">${logo()}${footerKicker(L,'Homework')}<h2>Homework</h2><p class="slide-sub">Questions ${start+1}–${end} of ${L.homework.length} · matched to the lesson, with fluency, application and reasoning.</p><div class="question-grid four">${cards}</div>${slideMeta(L,`Homework ${g+1}/3`)}</section>`});
     }
 
     const exRows=L.solutions.examples.map((e,i)=>`<div class="solution-row"><b>E${i+1}</b><span>${mathHTML(e.answer)}<br><small>${esc(e.method)}</small></span></div>`).join('');
@@ -108,7 +118,7 @@
     const units=['All',...new Set(all.map(x=>x.unit))];
     const q=state.query.toLowerCase().trim();
     const filtered=all.filter(L=>(state.unit==='All'||L.unit===state.unit) && (!q || `${L.lesson} ${L.code} ${L.title} ${L.objective} ${L.unit}`.toLowerCase().includes(q)));
-    app.innerHTML=`<div class="app-shell"><header class="topbar"><div class="brand"><img src="assets/images/nes-logo.svg" alt="NES logo"><div><div class="brand-title">NES Mathematics</div><span class="brand-sub">Year 7 · Interactive course</span></div></div><div class="topbar-spacer"></div><button class="text-btn" data-action="random">Random lesson</button></header><main class="home"><section class="hero"><div><div class="eyebrow">2026–27 Scheme of Work</div><h1>Year 7 Mathematics</h1><p>A complete interactive lesson library aligned to the school scheme of work and deliberately blended from Cambridge Checkpoint Stage 7 and Stage 8. Lessons move from explicit teaching to visual models, varied worked examples, progressive practice, homework and full solutions.</p></div><aside class="hero-aside"><div class="hero-metric"><strong>70</strong><span>scheme-aligned lessons</span></div><div class="hero-metric"><strong>2</strong><span>Cambridge books deliberately blended</span></div><div class="hero-metric"><strong>32+</strong><span>practice and homework questions per lesson</span></div></aside></section><div class="controls-row"><label class="search">${icons.search}<input id="searchInput" type="search" value="${esc(state.query)}" placeholder="Search a topic, code or skill…" autocomplete="off"></label><div class="chips">${units.map(u=>`<button class="chip ${state.unit===u?'active':''}" data-unit="${esc(u)}">${esc(u==='All'?'All units':unitShort(u))}</button>`).join('')}</div></div><div class="section-head"><h2>${state.unit==='All'?'Complete lesson library':unitShort(state.unit)}</h2><span>${filtered.length} lesson${filtered.length===1?'':'s'}</span></div>${filtered.length?`<div class="lesson-grid">${filtered.map(L=>`<article class="lesson-card" tabindex="0" role="button" data-lesson="${L.lesson}"><div class="lesson-top"><span class="lesson-no">Lesson ${String(L.lesson).padStart(2,'0')}</span><span class="lesson-code">${esc(L.code)}</span></div><h3>${esc(L.title)}</h3><p>${esc(L.objective)}</p><div class="card-foot">Open lesson ${icons.arrow}</div></article>`).join('')}</div>`:`<div class="empty-state">No lessons match that search.</div>`}</main></div>`;
+    app.innerHTML=`<div class="app-shell"><header class="topbar"><div class="brand"><img src="assets/images/nes-logo.svg" alt="NES logo"><div><div class="brand-title">NES Mathematics</div><span class="brand-sub">Year 7 · Interactive course</span></div></div><div class="topbar-spacer"></div><button class="text-btn" data-action="random">Random lesson</button></header><main class="home"><section class="hero"><div><div class="eyebrow">2026–27 Scheme of Work</div><h1>Year 7 Mathematics</h1><p>A complete interactive lesson library aligned to the school scheme of work and deliberately blended from Cambridge Checkpoint Stage 7 and Stage 8. Lessons move from explicit teaching to visual models, varied worked examples, progressive practice, homework and full solutions.</p></div><aside class="hero-aside"><div class="hero-metric"><strong>70</strong><span>scheme-aligned lessons</span></div><div class="hero-metric"><strong>2</strong><span>Cambridge books deliberately blended</span></div><div class="hero-metric"><strong>38</strong><span>practice + homework questions per lesson</span></div></aside></section><div class="controls-row"><label class="search">${icons.search}<input id="searchInput" type="search" value="${esc(state.query)}" placeholder="Search a topic, code or skill…" autocomplete="off"></label><div class="chips">${units.map(u=>`<button class="chip ${state.unit===u?'active':''}" data-unit="${esc(u)}">${esc(u==='All'?'All units':unitShort(u))}</button>`).join('')}</div></div><div class="section-head"><h2>${state.unit==='All'?'Complete lesson library':unitShort(state.unit)}</h2><span>${filtered.length} lesson${filtered.length===1?'':'s'}</span></div>${filtered.length?`<div class="lesson-grid">${filtered.map(L=>`<article class="lesson-card" tabindex="0" role="button" data-lesson="${L.lesson}"><div class="lesson-top"><span class="lesson-no">Lesson ${String(L.lesson).padStart(2,'0')}</span><span class="lesson-code">${esc(L.code)}</span></div><h3>${esc(L.title)}</h3><p>${esc(L.objective)}</p><div class="card-foot">Open lesson ${icons.arrow}</div></article>`).join('')}</div>`:`<div class="empty-state">No lessons match that search.</div>`}</main></div>`;
     bindHome();
   }
 
@@ -145,6 +155,15 @@
     document.querySelector('[data-action="prev"]')?.addEventListener('click',()=>setSlide(state.slide-1));
     document.querySelector('[data-action="next"]')?.addEventListener('click',()=>setSlide(state.slide+1));
     document.querySelector('[data-action="answers"]')?.addEventListener('click',()=>{state.showAnswers=!state.showAnswers;renderPlayer()});
+    document.querySelectorAll('[data-reveal]').forEach(btn=>btn.addEventListener('click',e=>{
+      e.stopPropagation();
+      const box=btn.closest('.question-card,.example-side');
+      if(!box)return;
+      const on=box.classList.toggle('revealed');
+      btn.textContent=on?'Hide solution':'Show solution';
+      btn.setAttribute('aria-expanded',String(on));
+      typeset();
+    }));
     document.querySelector('[data-action="overview"]')?.addEventListener('click',()=>showOverview(slides));
     document.querySelector('[data-action="board"]')?.addEventListener('click',openBoard);
     document.querySelector('[data-action="print"]')?.addEventListener('click',()=>window.print());
