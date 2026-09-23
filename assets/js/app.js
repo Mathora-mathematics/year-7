@@ -148,6 +148,9 @@
       s.push({label:`Example ${i+1}`,html:`<section class="slide">${logo()}${footerKicker(L,`Worked example ${i+1}`)}<h2>Example ${i+1}</h2><p class="slide-sub">${esc(ex.level)} · ${purpose}</p><div class="example-layout"><div class="example-main"><div class="example-q">${mathHTML(ex.question)}</div>${interactiveGrid(`L${L.lesson}-E${i+1}`)}</div><div class="example-side"><span class="source-pill">${esc(ex.level)}</span>${visual?`<div class="diagram-wrap">${visual}</div>`:`<div class="panel"><h4>Teaching lens</h4><p>${mathHTML(L.learning[Math.min(i,L.learning.length-1)]||L.objective)}</p></div>`}<div class="panel soft example-focus"><h4>Why this example?</h4><p>${i===0?'Secure the core method and notation.':i===1?'Change the representation or place the idea in context.':'Reverse the thinking, justify a claim or connect more than one fact.'}</p></div><button class="reveal-btn example-reveal" data-reveal aria-expanded="false">Show detailed solution</button><div class="solution-box"><strong>Answer</strong><div class="solution-answer">${mathHTML(sol.answer||'')}</div><ol class="worked-steps">${steps.map((st,k)=>`<li><b>Step ${k+1}</b><span>${mathHTML(st)}</span></li>`).join('')}</ol></div></div></div>${slideMeta(L,'Worked example')}</section>`});
     });
 
+    const guidedCards=L.practice.slice(0,3).map((q,i)=>`<div class="question-card"><span class="qno">${i+1}</span><div class="question-text">${mathHTML(q)}</div><button class="reveal-btn" data-reveal aria-expanded="false">Show solution</button><div class="answer">${mathHTML(L.solutions.practice[i])}</div></div>`).join('');
+    s.push({label:'Guided check',html:`<section class="slide guided-slide">${logo()}${footerKicker(L,'Guided check')}<div class="phase-badge">You try</div><h2>Check the method</h2><p class="slide-sub">Try these before independent work. Reveal one answer at a time and correct the method, not just the final number.</p><div class="question-grid practice-three guided-three">${guidedCards}</div>${slideMeta(L,'Guided practice')}</section>`});
+
     const practiceGroupSize=3;
     const phase=(idx,total)=>{
       const r=idx/total;
@@ -156,7 +159,7 @@
       if(r<.75)return ['Apply','Use the idea in context or more than one step'];
       return ['Reason & challenge','Reverse, justify, compare or diagnose an error'];
     };
-    for(let start=0,g=0;start<L.practice.length;start+=practiceGroupSize,g++){
+    for(let start=3,g=0;start<L.practice.length;start+=practiceGroupSize,g++){
       const end=Math.min(start+practiceGroupSize,L.practice.length);
       const ph=phase(start,L.practice.length);
       const cards=L.practice.slice(start,end).map((q,j)=>{const idx=start+j;return `<div class="question-card"><span class="qno">${idx+1}</span><div class="question-text">${mathHTML(q)}</div><button class="reveal-btn" data-reveal aria-expanded="false">Show solution</button><div class="answer">${mathHTML(L.solutions.practice[idx])}</div></div>`}).join('');
@@ -167,10 +170,10 @@
     for(let start=0,g=0;start<L.homework.length;start+=homeworkGroupSize,g++){
       const end=Math.min(start+homeworkGroupSize,L.homework.length);
       const cards=L.homework.slice(start,end).map((q,j)=>{const idx=start+j;return `<div class="question-card"><span class="qno">${idx+1}</span><div class="question-text">${mathHTML(q)}</div><button class="reveal-btn" data-reveal aria-expanded="false">Show solution</button><div class="answer">${mathHTML(L.solutions.homework[idx])}</div></div>`}).join('');
-      s.push({label:`Homework ${g+1}`,html:`<section class="slide">${logo()}${footerKicker(L,'Homework')}<h2>Homework</h2><p class="slide-sub">Questions ${start+1}–${end} of ${L.homework.length} · matched to the lesson, with fluency, application and reasoning.</p><div class="question-grid four">${cards}</div>${slideMeta(L,`Homework ${g+1}/${Math.ceil(L.homework.length/homeworkGroupSize)}`)}</section>`});
+      s.push({label:`Homework ${g+1}`,html:`<section class="slide">${logo()}${footerKicker(L,'Homework')}<h2>Homework</h2><p class="slide-sub">Questions ${start+1}–${end} of ${L.homework.length} · matched to the lesson, with fluency, application and reasoning.</p><div class="question-grid four homework-three">${cards}</div>${slideMeta(L,`Homework ${g+1}/${Math.ceil(L.homework.length/homeworkGroupSize)}`)}</section>`});
     }
 
-    const exRows=L.solutions.examples.map((e,i)=>`<div class="solution-row"><b>E${i+1}</b><span>${mathHTML(e.answer)}<br><small>${esc(e.method)}</small></span></div>`).join('');
+    const exRows=L.solutions.examples.map((e,i)=>`<div class="solution-row"><b>E${i+1}</b><span>${mathHTML(e.answer)}<br><small>${mathHTML(e.method)}</small></span></div>`).join('');
     const stRows=L.solutions.starter.map((a,i)=>`<div class="solution-row"><b>S${i+1}</b><span>${mathHTML(a)}</span></div>`).join('');
     s.push({label:'Solutions · Start',html:`<section class="slide">${logo()}${footerKicker(L,'Solutions')}<h2>Starter & examples</h2><p class="slide-sub">Teacher-facing answer bank with concise methods.</p><div class="solutions-scroll">${stRows}${exRows}</div>${slideMeta(L,'Solutions I')}</section>`});
     const practiceAnswerSize=6;
