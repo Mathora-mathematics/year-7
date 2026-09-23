@@ -228,3 +228,28 @@ a{color:inherit}
 @keyframes slideEnter{from{opacity:0;transform:translateX(18px) scale(.996)}to{opacity:1;transform:none}}
 @media (max-width:980px){.lesson-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.slide{padding:34px 38px 30px}.slide-logo{width:52px;height:52px;right:34px;top:26px}.two-col,.example-layout{gap:18px}}
 @media (max-width:720px){.home{padding:28px 18px 60px}.hero{grid-template-columns:1fr}.hero-aside{border-left:0;border-top:1px solid var(--line);padding:18px 0 0}.lesson-grid{grid-template-columns:1fr}.player-bar .player-title span,.player-footer .hint{display:none}.slide-stage{padding:8px}.slide-frame{width:calc(100vw - 16px)}.slide{padding:26px 24px}.slide-logo{display:none}.two-col,.two-col.equal,.example-layout{grid-template-columns:1fr}.question-grid{grid-template-columns:1fr}}
+
+
+/* 2026-09 lesson diversity upgrade: individual solution controls + maths typography */
+.question-card{display:flex;flex-direction:column;align-items:flex-start;gap:5px}
+.question-card .question-text{width:100%}
+.reveal-btn{appearance:none;border:0;border-bottom:1px solid rgba(5,126,164,.38);background:transparent;color:var(--accent-deep);padding:4px 0 3px;margin-top:3px;font:700 9px/1.15 var(--sans);letter-spacing:.115em;text-transform:uppercase;cursor:pointer;transition:color .18s ease,border-color .18s ease}
+.reveal-btn:hover,.reveal-btn:focus-visible{color:var(--ink);border-color:var(--ink);outline:none}
+.question-card.revealed .answer,.example-side.revealed .solution-box{display:block}
+.question-card.revealed .reveal-btn,.example-side.revealed .reveal-btn{color:var(--ink);border-color:var(--ink)}
+.show-answers .reveal-btn{opacity:.55}
+.example-reveal{align-self:flex-start;margin-top:2px}
+.context-note{font:400 20px/1.45 var(--serif)!important;color:var(--ink)!important;max-width:92%;letter-spacing:-.01em}
+.mini-checks{display:flex;flex-wrap:wrap;gap:8px;margin-top:24px}
+.mini-checks span{border:1px solid var(--line);background:#fff;border-radius:999px;padding:8px 11px;font-size:10px;letter-spacing:.08em;text-transform:uppercase;font-weight:750;color:var(--muted)}
+.math-frac{display:inline-grid;grid-template-rows:auto auto;vertical-align:-.42em;line-height:.92;text-align:center;min-width:1.15em;margin:0 .08em;font-family:var(--math)}
+.math-frac .top{border-bottom:1.35px solid currentColor;padding:0 .12em .05em}.math-frac .bottom{padding:.05em .12em 0}
+.mixed-number{display:inline-flex;align-items:center;gap:.08em;white-space:nowrap}.mixed-number .whole{align-self:center}
+.question-text sup,.answer sup,.example-q sup,.solution-answer sup,.solution-row sup{font-size:.67em;line-height:0;vertical-align:.48em}
+.question-source{margin-top:4px}
+.answer{width:100%;border-left:2px solid var(--accent);background:linear-gradient(90deg,rgba(0,169,220,.075),rgba(0,169,220,.025));padding:9px 11px}
+.question-grid{gap:10px 24px}
+.question-grid .question-card{min-height:66px;padding-top:10px;padding-bottom:8px}
+.question-grid .question-card .qno{top:9px}
+@media (max-height:760px) and (min-width:800px){.question-text{font-size:16px}.question-card{min-height:58px}.question-grid{gap:6px 20px}.reveal-btn{font-size:8px}.slide{padding-top:36px;padding-bottom:30px}.slide-rule{margin:13px 0}.diagram-wrap{min-height:160px}}
+@media print{.reveal-btn{display:none!important}.question-card.revealed .answer,.example-side.revealed .solution-box{display:block!important}}
