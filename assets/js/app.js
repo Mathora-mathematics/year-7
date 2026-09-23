@@ -188,7 +188,7 @@
     const units=['All',...new Set(all.map(x=>x.unit))];
     const q=state.query.toLowerCase().trim();
     const filtered=all.filter(L=>(state.unit==='All'||L.unit===state.unit) && (!q || `${L.lesson} ${L.code} ${L.title} ${L.objective} ${L.unit}`.toLowerCase().includes(q)));
-    app.innerHTML=`<div class="app-shell"><header class="topbar"><div class="brand"><img src="assets/images/nes-logo.svg" alt="NES logo"><div><div class="brand-title">NES Mathematics</div><span class="brand-sub">Year 7 · Interactive course</span></div></div><div class="topbar-spacer"></div><button class="text-btn" data-action="random">Random lesson</button></header><main class="home"><section class="hero"><div><div class="eyebrow">2026–27 Scheme of Work</div><h1>Year 7 Mathematics</h1><p>A complete interactive lesson library aligned to the school scheme of work and deliberately blended from Cambridge Checkpoint Stage 7 and Stage 8. Lessons move from explicit teaching to visual models, varied worked examples, progressive practice, homework and full solutions.</p></div><aside class="hero-aside"><div class="hero-metric"><strong>70</strong><span>scheme-aligned lessons</span></div><div class="hero-metric"><strong>2</strong><span>Cambridge books deliberately blended</span></div><div class="hero-metric"><strong>38</strong><span>practice + homework questions per lesson</span></div></aside></section><div class="controls-row"><label class="search">${icons.search}<input id="searchInput" type="search" value="${esc(state.query)}" placeholder="Search a topic, code or skill…" autocomplete="off"></label><div class="chips">${units.map(u=>`<button class="chip ${state.unit===u?'active':''}" data-unit="${esc(u)}">${esc(u==='All'?'All units':unitShort(u))}</button>`).join('')}</div></div><div class="section-head"><h2>${state.unit==='All'?'Complete lesson library':unitShort(state.unit)}</h2><span>${filtered.length} lesson${filtered.length===1?'':'s'}</span></div>${filtered.length?`<div class="lesson-grid">${filtered.map(L=>`<article class="lesson-card" tabindex="0" role="button" data-lesson="${L.lesson}"><div class="lesson-top"><span class="lesson-no">Lesson ${String(L.lesson).padStart(2,'0')}</span><span class="lesson-code">${esc(L.code)}</span></div><h3>${esc(L.title)}</h3><p>${esc(L.objective)}</p><div class="card-foot">Open lesson ${icons.arrow}</div></article>`).join('')}</div>`:`<div class="empty-state">No lessons match that search.</div>`}</main></div>`;
+    app.innerHTML=`<div class="app-shell"><header class="topbar"><div class="brand"><img src="assets/images/nes-logo.svg" alt="NES logo"><div><div class="brand-title">NES Mathematics</div><span class="brand-sub">Year 7 · Interactive course</span></div></div><div class="topbar-spacer"></div><button class="text-btn" data-book-manager>Textbooks</button><button class="text-btn" data-action="random">Random lesson</button></header><main class="home"><section class="hero"><div><div class="eyebrow">2026–27 Scheme of Work</div><h1>Year 7 Mathematics</h1><p>A complete interactive lesson library aligned to the school scheme of work and deliberately blended from Cambridge Checkpoint Stage 7 and Stage 8. Lessons move from explicit teaching to visual models, varied worked examples, progressive practice, homework and full solutions.</p></div><aside class="hero-aside"><div class="hero-metric"><strong>70</strong><span>scheme-aligned lessons</span></div><div class="hero-metric"><strong>2</strong><span>Cambridge books deliberately blended</span></div><div class="hero-metric"><strong>38</strong><span>practice + homework questions per lesson</span></div></aside></section><div class="controls-row"><label class="search">${icons.search}<input id="searchInput" type="search" value="${esc(state.query)}" placeholder="Search a topic, code or skill…" autocomplete="off"></label><div class="chips">${units.map(u=>`<button class="chip ${state.unit===u?'active':''}" data-unit="${esc(u)}">${esc(u==='All'?'All units':unitShort(u))}</button>`).join('')}</div></div><div class="section-head"><h2>${state.unit==='All'?'Complete lesson library':unitShort(state.unit)}</h2><span>${filtered.length} lesson${filtered.length===1?'':'s'}</span></div>${filtered.length?`<div class="lesson-grid">${filtered.map(L=>`<article class="lesson-card" tabindex="0" role="button" data-lesson="${L.lesson}"><div class="lesson-top"><span class="lesson-no">Lesson ${String(L.lesson).padStart(2,'0')}</span><span class="lesson-code">${esc(L.code)}</span></div><h3>${esc(L.title)}</h3><p>${esc(L.objective)}</p><div class="card-foot">Open lesson ${icons.arrow}</div></article>`).join('')}</div>`:`<div class="empty-state">No lessons match that search.</div>`}</main></div>`;
     bindHome();
   }
 
@@ -200,6 +200,7 @@
     document.querySelectorAll('[data-unit]').forEach(b=>b.addEventListener('click',()=>{state.unit=b.dataset.unit;renderHome()}));
     const input=document.getElementById('searchInput'); if(input) input.addEventListener('input',e=>{state.query=e.target.value;renderHome();requestAnimationFrame(()=>{const n=document.getElementById('searchInput'); if(n){n.focus();n.setSelectionRange(n.value.length,n.value.length)}})});
     document.querySelector('[data-action="random"]')?.addEventListener('click',()=>{const a=lessons();openLesson(a[Math.floor(Math.random()*a.length)].lesson,0)});
+    window.NES_TEXTBOOKS?.hydrate(document);
   }
 
   function openLesson(id, slide=0, push=true){
@@ -212,8 +213,10 @@
   function renderPlayer(){
     const L=state.lesson; if(!L){renderHome();return}
     const slides=buildSlides(L); state.slide=Math.min(state.slide,slides.length-1);
-    app.innerHTML=`<main class="player ${state.showAnswers?'show-answers':''}"><header class="player-bar"><button class="icon-btn" data-action="home" title="Back to library">${icons.home}</button><div class="player-title"><strong>${esc(L.title)}</strong><span>Lesson ${L.lesson} · ${esc(L.code)}</span></div><div class="spacer"></div><button class="text-btn" data-action="answers">${icons.eye}<span>${state.showAnswers?'Hide all':'Reveal all'}</span></button><button class="icon-btn" data-action="board" title="Whiteboard">${icons.pen}</button><button class="icon-btn" data-action="overview" title="Slide overview">${icons.grid}</button><button class="icon-btn" data-action="print" title="Print / save PDF">${icons.print}</button></header><div class="progress-wrap"><div class="progress-bar" style="width:${((state.slide+1)/slides.length)*100}%"></div></div><div class="slide-stage"><div class="slide-frame">${slides.map((x,i)=>x.html.replace('class="slide','class="slide '+(i===state.slide?'active':i<state.slide?'prev':'next'))).join('')}</div></div><footer class="player-footer"><div class="count">${state.slide+1} / ${slides.length}</div><div class="hint">← → navigate · A answers · B board · O overview</div><div class="spacer"></div><button class="nav-btn" data-action="prev" aria-label="Previous slide">${icons.left}</button><button class="nav-btn" data-action="next" aria-label="Next slide">${icons.right}</button></footer></main>`;
+    app.innerHTML=`<main class="player ${state.showAnswers?'show-answers':''}"><header class="player-bar"><button class="icon-btn" data-action="home" title="Back to library">${icons.home}</button><div class="player-title"><strong>${esc(L.title)}</strong><span>Lesson ${L.lesson} · ${esc(L.code)}</span></div><div class="spacer"></div><button class="text-btn" data-book-manager>Textbooks</button><button class="text-btn" data-action="answers">${icons.eye}<span>${state.showAnswers?'Hide all':'Reveal all'}</span></button><button class="icon-btn" data-action="board" title="Whiteboard">${icons.pen}</button><button class="icon-btn" data-action="overview" title="Slide overview">${icons.grid}</button><button class="icon-btn" data-action="print" title="Print / save PDF">${icons.print}</button></header><div class="progress-wrap"><div class="progress-bar" style="width:${((state.slide+1)/slides.length)*100}%"></div></div><div class="slide-stage"><div class="slide-frame">${slides.map((x,i)=>x.html.replace('class="slide','class="slide '+(i===state.slide?'active':i<state.slide?'prev':'next'))).join('')}</div></div><footer class="player-footer"><div class="count">${state.slide+1} / ${slides.length}</div><div class="hint">← → navigate · A answers · B board · O overview</div><div class="spacer"></div><button class="nav-btn" data-action="prev" aria-label="Previous slide">${icons.left}</button><button class="nav-btn" data-action="next" aria-label="Next slide">${icons.right}</button></footer></main>`;
     bindPlayer(slides);
+    bindWorkCanvases();
+    window.NES_TEXTBOOKS?.hydrate(document);
     typeset();
   }
 
@@ -241,6 +244,47 @@
     const frame=document.querySelector('.slide-frame');
     frame?.addEventListener('pointerdown',e=>{if(e.pointerType==='touch')sx=e.clientX});
     frame?.addEventListener('pointerup',e=>{if(sx==null)return; const dx=e.clientX-sx; sx=null; if(Math.abs(dx)>50)setSlide(state.slide+(dx<0?1:-1))});
+  }
+
+  function bindWorkCanvases(){
+    document.querySelectorAll('[data-work-canvas]').forEach(canvas=>{
+      const key=canvas.dataset.workCanvas;if(canvas.dataset.bound)return;canvas.dataset.bound='1';
+      const wrap=canvas.closest('.interactive-grid'); if(!wrap)return;
+      const model=state.workInk[key]||(state.workInk[key]={active:false,color:'#111214',strokes:[]});
+      const ctx=canvas.getContext('2d');
+      function resize(){
+        const r=canvas.getBoundingClientRect(),dpr=Math.max(1,window.devicePixelRatio||1);
+        canvas.width=Math.max(1,Math.round(r.width*dpr));canvas.height=Math.max(1,Math.round(r.height*dpr));
+        ctx.setTransform(dpr,0,0,dpr,0,0);ctx.lineCap='round';ctx.lineJoin='round';redraw();
+      }
+      function redraw(){
+        const r=canvas.getBoundingClientRect();ctx.clearRect(0,0,r.width,r.height);
+        for(const st of model.strokes){
+          if(!st.pts?.length)continue;ctx.strokeStyle=st.color;ctx.lineWidth=3;ctx.beginPath();
+          st.pts.forEach((p,i)=>{const x=p[0]*r.width,y=p[1]*r.height;i?ctx.lineTo(x,y):ctx.moveTo(x,y)});ctx.stroke();
+        }
+      }
+      let current=null;
+      const point=e=>{const r=canvas.getBoundingClientRect();return[(e.clientX-r.left)/r.width,(e.clientY-r.top)/r.height]};
+      canvas.addEventListener('pointerdown',e=>{
+        if(!(model.active||e.pointerType==='pen'))return;
+        e.preventDefault();e.stopPropagation();canvas.setPointerCapture(e.pointerId);
+        current={color:model.color,pts:[point(e)]};model.strokes.push(current);
+      });
+      canvas.addEventListener('pointermove',e=>{
+        if(!current)return;e.preventDefault();e.stopPropagation();current.pts.push(point(e));redraw();
+      });
+      const stop=e=>{if(current){e?.preventDefault?.();e?.stopPropagation?.();current=null}};
+      canvas.addEventListener('pointerup',stop);canvas.addEventListener('pointercancel',stop);
+      wrap.querySelector('[data-grid-pen]')?.addEventListener('click',e=>{
+        e.stopPropagation();model.active=!model.active;wrap.classList.toggle('pen-active',model.active);
+        e.currentTarget.textContent=model.active?'Pen on':'Pen';canvas.style.touchAction=model.active?'none':'auto';
+      });
+      wrap.querySelectorAll('[data-grid-color]').forEach(b=>b.addEventListener('click',e=>{e.stopPropagation();model.color=b.dataset.gridColor;wrap.querySelectorAll('[data-grid-color]').forEach(x=>x.classList.toggle('selected',x===b));}));
+      wrap.querySelector('[data-grid-undo]')?.addEventListener('click',e=>{e.stopPropagation();model.strokes.pop();redraw()});
+      wrap.querySelector('[data-grid-clear]')?.addEventListener('click',e=>{e.stopPropagation();model.strokes=[];redraw()});
+      new ResizeObserver(resize).observe(canvas);resize();
+    });
   }
 
   function showOverview(slides){
