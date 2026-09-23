@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 520 360" role="img" aria-labelledby="t d">
+<title id="t">New English School</title><desc id="d">New English School shield mark and mathematics wordmark.</desc>
+<rect width="520" height="360" fill="none"/>
+<g transform="translate(190 14)">
+<path d="M70 0h110v96c0 62-43 103-55 111-12-8-55-49-55-111z" fill="#08a7dc" stroke="#077ca5" stroke-width="3"/>
+<path d="M79 11h92v83c0 51-35 85-46 94-11-9-46-43-46-94z" fill="none" stroke="#dff7ff" stroke-width="2"/>
+<text x="125" y="29" text-anchor="middle" font-family="Arial,Helvetica,sans-serif" font-size="14" font-weight="700" fill="#fff">EX ORIENTE LUX</text>
+<path d="M105 74c20-19 41-27 61-30-13 11-22 22-27 34 16-7 29-9 41-7-16 11-31 20-45 26z" fill="#fff" opacity=".96"/>
+<path d="M91 87c18 4 34 4 49 1 13 13 25 17 40 19-29 7-57 4-89-20z" fill="#fff"/>
+<text x="125" y="136" text-anchor="middle" font-family="Georgia,serif" font-size="31" fill="#fff">NES</text>
+<text x="125" y="171" text-anchor="middle" font-family="Arial,Helvetica,sans-serif" font-size="13" font-weight="700" fill="#fff">EST. 1969</text>
+</g>
+<text x="260" y="270" text-anchor="middle" font-family="Georgia,'Times New Roman',serif" font-size="43" font-weight="700" fill="#08a7dc">New English School</text>
+<text x="260" y="305" text-anchor="middle" font-family="Arial,Helvetica,sans-serif" font-size="16" letter-spacing="4" fill="#333">MATHEMATICS</text>
+</svg>
