@@ -29,7 +29,7 @@
     lessonsPrepared=true;
   }
   const lessons = () => { prepareLessons(); return window.NES_LESSONS || []; };
-  const state = { lesson:null, slide:0, showAnswers:false, overlay:null, board:null, unit:'All', query:'' };
+  const state = { lesson:null, slide:0, showAnswers:false, overlay:null, board:null, unit:'All', query:'', workInk:{} };
   const icons={
     search:`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="11" cy="11" r="7"/><path d="m20 20-4-4"/></svg>`,
     arrow:`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M5 12h14M13 6l6 6-6 6"/></svg>`,
@@ -64,6 +64,64 @@
   function slideMeta(L,section){return `<div class="slide-meta"><div class="meta-left"><span>Year 7 Mathematics</span><span>${esc(L.code)}</span><span>${esc(section)}</span></div><span>New English School</span></div>`;}
   function footerKicker(L,section){return `<div class="slide-kicker">${esc(section)} · Lesson ${L.lesson}</div>`;}
   function diagram(L,variant=0){return L.diagram && window.NES_DIAGRAMS ? window.NES_DIAGRAMS.render(L.diagram,variant) : ''}
+
+  function textbookRef(L,stage){
+    const m=window.NES_TEXTBOOK_MAP?.[String(L.lesson)]?.['stage'+stage];
+    return m||null;
+  }
+  function bookSourceSlide(L,stage){
+    const ref=textbookRef(L,stage); if(!ref)return '';
+    const label=stage===7?L.stage7:L.stage8;
+    const role=stage===7?'Foundation source':'Stretch source';
+    return `<section class="slide textbook-source-slide">${logo()}${footerKicker(L,`Stage ${stage} textbook`)}
+      <h2>From the Stage ${stage} book</h2>
+      <p class="slide-sub">Actual source page aligned to ${esc(L.code)}. The site renders the textbook locally and automatically crops the worked-example region.</p>
+      <div class="textbook-layout">
+        <div class="textbook-crop-shell"><canvas class="book-crop-canvas" data-stage="${stage}" data-pdf-page="${ref.pdfPage}" data-printed-page="${ref.printedPage}"></canvas></div>
+        <aside class="textbook-side">
+          <span class="source-pill">Cambridge Checkpoint · Stage ${stage}</span>
+          <h3>${role}</h3>
+          <p class="textbook-ref">${esc(label)}</p>
+          <div class="source-card compact"><span class="source-label">Scheme alignment</span><p>${esc(L.objective)}</p></div>
+          <div class="book-status-row"><span data-book-status="${stage}">Checking textbook…</span></div>
+          <div class="book-actions"><button type="button" class="text-btn accent" data-book-manager>Load / replace PDF</button><button type="button" class="text-btn" data-book-full data-stage="${stage}" data-pdf-page="${ref.pdfPage}" data-printed-page="${ref.printedPage}">Open full page</button></div>
+          <p class="book-page-note">Printed page ${ref.printedPage} · source stays on this device.</p>
+        </aside>
+      </div>${slideMeta(L,`Stage ${stage} source`)}</section>`;
+  }
+
+  function solutionSteps(L,ex,sol){
+    const t=(L.title+' '+L.objective).toLowerCase();
+    const method=sol?.method||'';
+    let steps=[];
+    if(/round|significant/.test(t))steps=['Identify the place value you are rounding to.','Look at the digit immediately to the right.','Use 0–4: keep; 5–9: round up.','Write the rounded value and check its size is sensible.'];
+    else if(/negative|integer/.test(t))steps=['Represent the signs carefully before calculating.','Use the number line / sign rule to decide direction or sign.','Complete the arithmetic.','Check the result against an estimate or inverse operation.'];
+    else if(/like terms/.test(t))steps=['Identify terms with exactly the same variable part.','Group only those like terms.','Add or subtract their coefficients.','Leave unlike terms separate and write the expression in standard form.'];
+    else if(/bracket|distributive/.test(t))steps=['Multiply the term outside the bracket by every term inside.','Keep each sign attached to its term.','Write the expanded expression.','Collect like terms if any remain.'];
+    else if(/substitution|formula/.test(t))steps=['Write the formula or expression first.','Replace each variable with its given value using brackets for negatives.','Follow the order of operations.','State the final value with units if the context has units.'];
+    else if(/equation/.test(t))steps=['Form or copy the equation clearly.','Undo operations in reverse order, doing the same to both sides.','Continue until the unknown is isolated.','Substitute the answer back into the original equation to check.'];
+    else if(/fraction/.test(t)&&/add|subtract/.test(t))steps=['Find a common denominator.','Rewrite each fraction as an equivalent fraction.','Add or subtract the numerators only.','Simplify the result; convert an improper fraction if appropriate.'];
+    else if(/fraction/.test(t)&&/multiply|divide/.test(t))steps=['For multiplication, multiply numerators and denominators; cancel common factors when useful.','For division, multiply by the reciprocal of the second fraction.','Simplify common factors.','Give the final fraction in simplest form.'];
+    else if(/fraction/.test(t))steps=['Identify the whole, numerator and denominator.','Use equivalent fractions or divide by the denominator as required.','Multiply by the numerator / compare common parts.','Simplify and check the fraction is reasonable.'];
+    else if(/decimal/.test(t))steps=['Use place value carefully and align decimal points where needed.','Carry out the operation using a reliable written method.','Restore/check the decimal place using place value or estimation.','Check using an inverse operation or estimate.'];
+    else if(/percent/.test(t))steps=['Write the percentage as a useful fraction or decimal.','Find the required percentage or multiplier.','Apply it to the original amount.','Check the answer against 10%, 50% or 100% as a sense check.'];
+    else if(/angle|parallel/.test(t))steps=['Mark the angle fact you are using on the diagram.','Write the relationship as an equation if an unknown is involved.','Solve the arithmetic/algebra accurately.','Check against 90°, 180° or 360° and the shape/parallel-line facts.'];
+    else if(/area|perimeter|volume|surface/.test(t))steps=['Sketch or identify the required dimensions.','Write the correct formula before substituting.','Convert units first if they are mixed.','Calculate and attach the correct linear, square or cubic unit.'];
+    else if(/ratio|proportion|unitary/.test(t))steps=['Identify the ratio or corresponding quantities.','Find one part / one unit where useful.','Scale to the required quantity.','Check that all parts preserve the same multiplicative relationship.'];
+    else if(/sequence|nth/.test(t))steps=['Identify the change between consecutive terms.','For an nth-term rule, use the common difference as the coefficient of n.','Adjust the constant so the rule gives the first term.','Test the rule on at least two terms.'];
+    else if(/average|data|frequency|chart/.test(t))steps=['Read the data representation carefully and identify what each value means.','Use the correct statistic or representation.','Show totals / frequencies before dividing or comparing.','Interpret the result in the context of the data.'];
+    else if(/probability/.test(t))steps=['List or identify the possible outcomes.','Count favourable outcomes and total equally likely outcomes, or use the observed frequency.','Write the probability as a fraction/decimal/percentage as appropriate.','Check the answer lies between 0 and 1.'];
+    else if(/coordinate|graph|line/.test(t))steps=['Read x before y and check the scale on both axes.','Create or use the coordinate/table values carefully.','Plot or calculate using the stated rule.','Check the point/line against the equation or geometric condition.'];
+    else if(/inequal/.test(t))steps=['Solve using the same inverse-operation logic as an equation.','Keep the inequality symbol throughout.','If multiplying or dividing by a negative, reverse the inequality sign.','Check with a value from the solution region.'];
+    else if(/construct|bisector|perpendicular/.test(t))steps=['Keep construction arcs visible.','Use equal compass radii where the construction requires equal distances.','Join the correct intersection points with a straightedge.','Verify the final equal lengths/angles or right angle.'];
+    else steps=['Identify the mathematical structure and relevant rule.','Carry out the calculation one justified step at a time.','Simplify the result.','Check the answer using estimation, inverse operation or the context.'];
+    if(method)steps.splice(1,0,method);
+    return steps.slice(0,5);
+  }
+
+  function interactiveGrid(key){
+    return `<div class="working-grid interactive-grid" data-grid-key="${esc(key)}"><canvas class="work-canvas" data-work-canvas="${esc(key)}"></canvas><div class="grid-tools"><button type="button" data-grid-pen>Pen</button><button type="button" data-grid-color="#111214" class="ink-dot black" aria-label="Black pen"></button><button type="button" data-grid-color="#00a7d4" class="ink-dot blue" aria-label="Blue pen"></button><button type="button" data-grid-color="#c64e48" class="ink-dot red" aria-label="Red pen"></button><button type="button" data-grid-undo>Undo</button><button type="button" data-grid-clear>Clear</button></div></div>`;
+  }
 
   function buildSlides(L){
     const s=[];
