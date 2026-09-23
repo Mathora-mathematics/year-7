@@ -197,7 +197,7 @@ async function openManager(){
 }
 async function hydrate(root=document){
   root.querySelectorAll('[data-book-manager]').forEach(b=>{if(!b.dataset.bound){b.dataset.bound='1';b.addEventListener('click',openManager)}});
-  root.querySelectorAll('.book-crop-canvas').forEach(c=>renderCrop(c));
+  root.querySelectorAll('.slide.active .book-crop-canvas, .book-crop-canvas.active-source').forEach(c=>renderCrop(c));
   root.querySelectorAll('[data-book-full]').forEach(b=>{if(!b.dataset.bound){b.dataset.bound='1';b.addEventListener('click',()=>openFull(Number(b.dataset.stage),Number(b.dataset.pdfPage),Number(b.dataset.printedPage))) }});
   await refreshStatuses(root);
 }
