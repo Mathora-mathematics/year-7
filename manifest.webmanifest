@@ -1,0 +1,9 @@
+{
+  "name": "NES Year 7 Mathematics",
+  "short_name": "NES Maths",
+  "start_url": "./",
+  "display": "standalone",
+  "background_color": "#f5f2eb",
+  "theme_color": "#f5f2eb",
+  "icons": []
+}
