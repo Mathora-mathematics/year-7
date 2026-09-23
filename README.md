@@ -12,11 +12,11 @@ A static, GitHub Pages-ready mathematics lesson website for New English School.
   - 2 explicit teaching / learning-content slides
   - a Stage 7 → Stage 8 source/progression slide
   - 3 worked examples (Stage 7 foundation, Stage 8 stretch, reasoning synthesis)
-  - 20 progressive independent-practice questions
-  - 12 homework questions
+  - 24 progressive independent-practice questions, including context, reverse, error-analysis and open reasoning
+  - 14 homework questions with matched fluency, application and reasoning
   - full starter, example, practice and homework solutions
-- SVG mathematics diagrams and visual models where they help understanding.
-- Reveal/hide answers.
+- SVG mathematics diagrams and visual models with multiple variants across examples, including geometry, coordinates, statistics, probability, FDP, area and constructions.
+- Reveal/hide **individual solutions** beside each question or reveal all answers globally.
 - Full-screen slide presentation.
 - Keyboard navigation and touch/swipe navigation.
 - Built-in on-screen teacher whiteboard.
