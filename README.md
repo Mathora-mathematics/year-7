@@ -5,12 +5,14 @@ A static, GitHub Pages-ready mathematics lesson website for New English School.
 ## What is included
 
 - **70 Year 7 lessons**, one for every lesson title in the supplied 2026–27 Year 7 scheme of work.
+- Every lesson is mapped to an **actual Stage 7 page and Stage 8 page** from the supplied Cambridge Checkpoint coursebooks.
 - Content alignment from the supplied **Cambridge Checkpoint Mathematics Coursebook Stage 7** and **Stage 8**.
 - Each lesson contains:
   - editorial/minimal cover
   - 4-question retrieval starter
   - 2 explicit teaching / learning-content slides
   - a Stage 7 → Stage 8 source/progression slide
+  - an **actual Stage 7 textbook page/excerpt slide** and **actual Stage 8 textbook page/excerpt slide** rendered from the teacher's local PDFs
   - 3 worked examples (Stage 7 foundation, Stage 8 stretch, reasoning synthesis)
   - 24 progressive independent-practice questions, including context, reverse, error-analysis and open reasoning
   - 14 homework questions with matched fluency, application and reasoning
@@ -20,6 +22,7 @@ A static, GitHub Pages-ready mathematics lesson website for New English School.
 - Full-screen slide presentation.
 - Keyboard navigation and touch/swipe navigation.
 - Built-in on-screen teacher whiteboard.
+- **Write directly on every teacher working grid** with pen, colour, undo and clear controls; Apple Pencil / stylus input works through pointer events.
 - Slide overview.
 - Print / Save as PDF through the browser.
 - Search and unit filters on the home page.
@@ -38,6 +41,12 @@ A static, GitHub Pages-ready mathematics lesson website for New English School.
 
 The site uses hash-based lesson URLs such as `#/lesson/38/5`, which work cleanly on GitHub Pages without a server-side router.
 
+## Load the two textbooks once
+
+Because this repository is public, the full copyrighted coursebook PDFs are **not uploaded to GitHub**. Instead, click **Textbooks** on the home page and choose the supplied Stage 7 and Stage 8 PDFs. They are stored locally in IndexedDB on that browser/device.
+
+Every lesson then renders the correct mapped source page and automatically crops the worked-example region. The teacher can also open the full mapped page from the lesson.
+
 ## Teacher controls
 
 - **← / →** — previous / next slide
@@ -47,6 +56,8 @@ The site uses hash-based lesson URLs such as `#/lesson/38/5`, which work cleanly
 - **Home / End** — first / final slide
 - **Esc** — return to the lesson library, or close an overlay
 - **Print icon** — print or save the lesson as a PDF
+- **Textbooks** — load/replace the Stage 7 and Stage 8 coursebook PDFs
+- **Pen on a worked-example grid** — write directly in the squared working area; choose black/blue/red, undo or clear
 
 ## File structure
 
@@ -66,9 +77,12 @@ NES_Year7_Maths_Website/
 │   │   └── favicon.svg
 │   └── js/
 │       ├── app.js
-│       └── diagrams.js
+│       ├── diagrams.js
+│       ├── diagram-upgrades.js
+│       └── textbooks.js
 └── data/
     ├── lessons.js
+    ├── textbook-map.js
     └── source-alignment.json
 ```
 
@@ -78,7 +92,7 @@ The site is intentionally data-driven. The lesson player is reusable. For Year 8
 
 ## Content source note
 
-The lesson sequence and objectives are aligned to the supplied school scheme of work. The Stage 7 and Stage 8 coursebooks are used as the content spine and source of exercise structure. The web lessons present adapted/reworked teaching examples and question sets rather than embedding the textbook PDFs themselves. The source alignment for every lesson is stored in `data/source-alignment.json` and is also shown inside each lesson.
+The lesson sequence and objectives are aligned to the supplied school scheme of work. The Stage 7 and Stage 8 coursebooks are used as the content spine and source of exercise structure. The web lessons use adapted/reworked teaching examples and question sets, and can render the **actual mapped textbook page locally** from the teacher's supplied PDFs. The PDFs themselves are never published by the site. The source alignment for every lesson is stored in `data/source-alignment.json` and is also shown inside each lesson.
 
 ## Design note
 
