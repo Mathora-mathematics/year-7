@@ -309,7 +309,8 @@
   window.addEventListener('popstate',route); window.addEventListener('hashchange',route);
   window.addEventListener('keydown',e=>{
     if(!state.lesson)return;
-    if(document.querySelector('.board-layer')||document.querySelector('.overlay')){if(e.key==='Escape'){document.querySelector('.board-layer')?.remove();document.querySelector('.overlay')?.remove()}return}
+    const modal=document.querySelector('.board-layer,.overlay,.textbook-manager-layer,.textbook-page-layer');
+    if(modal){if(e.key==='Escape')modal.remove();return}
     if(['ArrowRight','PageDown',' '].includes(e.key)){e.preventDefault();setSlide(state.slide+1)}
     if(['ArrowLeft','PageUp'].includes(e.key)){e.preventDefault();setSlide(state.slide-1)}
     if(e.key.toLowerCase()==='a'){state.showAnswers=!state.showAnswers;renderPlayer()}
