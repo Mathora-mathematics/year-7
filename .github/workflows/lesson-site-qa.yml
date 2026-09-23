@@ -2,7 +2,7 @@ name: Lesson site QA
 
 on:
   push:
-    branches: [ main, "lesson-diversity-upgrade-2026-09-23", "textbook-integration-whiteboard-2026-09-23" ]
+    branches: [ main, "v4-progressive-visual-overhaul-2026-09-23" ]
   pull_request:
     branches: [ main ]
 
@@ -22,9 +22,9 @@ jobs:
           node --check assets/js/app.js
           node --check assets/js/diagrams.js
           node --check assets/js/diagram-upgrades.js
-          node --check assets/js/textbooks.js
-          node --check data/textbook-map.js
+          node --check assets/js/visual-lessons.js
           node --check data/lessons.js
+          node --check data/v4-overrides.js
           for f in data/enrichment/*.js; do node --check "$f"; done
       - name: Validate lesson data
         run: node scripts/qa.mjs
@@ -34,5 +34,6 @@ jobs:
           test -f assets/css/site.css
           test -f assets/images/nes-logo.svg
           test -f data/source-alignment.json
-          test -f data/textbook-map.js
-          test -f assets/js/textbooks.js
+          test -f assets/js/visual-lessons.js
+          ! grep -q "textbooks.js" index.html
+          ! grep -q "pdf.min.js" index.html
