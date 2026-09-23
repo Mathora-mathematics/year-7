@@ -1,0 +1,632 @@
+[
+  {
+    "lesson": 1,
+    "code": "1.1.1",
+    "title": "Whole Number Operations",
+    "sow": "Addition, subtraction, multiplication and division of whole numbers",
+    "stage7": "Stage 7: Units 1 & 3.8 - integer arithmetic / estimation",
+    "stage8": "Stage 8: 1.1 & 3.8 - arithmetic with integers / estimation",
+    "references": "Teacher's notes/DFM Year 7 course; Teacher's notes/DFM Year 7 course; Teacher's notes/DFM Year 7 course; Teacher's notes/DFM Year 7 course; Teacher's notes/DFM Year 7 course"
+  },
+  {
+    "lesson": 2,
+    "code": "1.2.1",
+    "title": "Primes, Squares & Cubes",
+    "sow": "Types of numbers - prime numbers, square numbers, cube numbers",
+    "stage7": "Stage 7: 1.5-1.6 - primes, squares and roots",
+    "stage8": "Stage 8: 1.3-1.4 - primes, powers and roots",
+    "references": "Y7CP - 1.5 (pages 14-15); Y7CP - 1.6 (pages 16-17); Y8CP - 1.4 (pages 15-16)"
+  },
+  {
+    "lesson": 3,
+    "code": "1.2.2",
+    "title": "Factors, HCF, Multiples & LCM",
+    "sow": "Factors and HCF, Multiples and LCM (listing factors, multiples)",
+    "stage7": "Stage 7: 1.3-1.4 - multiples and factors",
+    "stage8": "Stage 8: 1.2-1.3 - multiples, factors and primes",
+    "references": "Y7CP - 1.4 (pages 12-13) no divisibility tests; Y8CP - 1.2 (pages 11-12); Y7CP - 1.3 (page 11); Y8CP - 1.2 (pages 11-12)"
+  },
+  {
+    "lesson": 4,
+    "code": "1.3.1",
+    "title": "Negative Numbers",
+    "sow": "Using negative numbers",
+    "stage7": "Stage 7: 1.1-1.2 - negative numbers",
+    "stage8": "Stage 8: 1.1 - arithmetic with integers",
+    "references": "Y7CP - 1.1 (pages 8-9); Y7CP - 1.1 (pages 10-11); Y8CP - 1.1 (pages 8-9)"
+  },
+  {
+    "lesson": 5,
+    "code": "1.3.2",
+    "title": "Order of Operations",
+    "sow": "Order of operations (including directed numbers)",
+    "stage7": "Stage 7: integer / powers review tasks",
+    "stage8": "Stage 8: 1.1 & 1.4 - integer arithmetic, powers and roots",
+    "references": "Teacher's notes"
+  },
+  {
+    "lesson": 6,
+    "code": "1.4.1",
+    "title": "Rounding Decimals",
+    "sow": "Round a number to a given number of decimal places",
+    "stage7": "Stage 7: 3.4 - rounding",
+    "stage8": "Stage 8: 3.3 - rounding",
+    "references": "Y7CP - 3.4 (page 37); Y8CP - 3.3 (page 36)"
+  },
+  {
+    "lesson": 7,
+    "code": "1.4.2",
+    "title": "Significant Figures",
+    "sow": "Round any number to one significant figure",
+    "stage7": "Stage 7: 3.4 & 3.8 - rounding / estimation",
+    "stage8": "Stage 8: 3.3 & 3.8 - rounding / estimation",
+    "references": "Teacher's notes"
+  },
+  {
+    "lesson": 8,
+    "code": "2.1.1",
+    "title": "Algebra Language",
+    "sow": "Know the meaning of constant, variable, coefficient, term, expression, equation, formula",
+    "stage7": "Stage 7: 2.4-2.5 & Unit 9 language",
+    "stage8": "Stage 8: 2.5-2.6 & Unit 9 language",
+    "references": "Teacher's notes/DFM Year 7 course"
+  },
+  {
+    "lesson": 9,
+    "code": "2.1.2",
+    "title": "Algebra Notation",
+    "sow": "Know and use basic algebraic notation (the ‘rules’ of algebra)",
+    "stage7": "Stage 7: 2.4 & 9.1 - algebraic conventions",
+    "stage8": "Stage 8: 2.5 & 9.1 - algebraic conventions",
+    "references": "Teacher's notes/DFM Year 7 course"
+  },
+  {
+    "lesson": 10,
+    "code": "2.2.1",
+    "title": "Collecting Like Terms",
+    "sow": "Simplify an expression by collecting like terms, including with simple fractional coefficients",
+    "stage7": "Stage 7: 9.1 - collecting like terms",
+    "stage8": "Stage 8: 9.1 - collecting like terms incl. powers/products",
+    "references": "Y7CP - 9.1 (pages 98-99); Y8CP - 9.1 (pages 96-97)"
+  },
+  {
+    "lesson": 11,
+    "code": "2.2.2",
+    "title": "Expanding Single Brackets",
+    "sow": "Manipulate expressions by multiplying a constant and a single term over a bracket (the distributive law)",
+    "stage7": "Stage 7: 9.2 - expanding brackets",
+    "stage8": "Stage 8: 9.2 - expanding brackets",
+    "references": "Y7CP - 9.2 (page 100); Y8CP - 9.2 (page 98)"
+  },
+  {
+    "lesson": 12,
+    "code": "2.3.1",
+    "title": "Forming Expressions",
+    "sow": "Forming expressions",
+    "stage7": "Stage 7: 2.4 - constructing expressions",
+    "stage8": "Stage 8: 2.5 - constructing linear expressions",
+    "references": "Y7CP - 2.4 (pages 26-27); Y8CP - 2.5 (page 26)"
+  },
+  {
+    "lesson": 13,
+    "code": "2.3.2",
+    "title": "Writing Formulae",
+    "sow": "Driving formulae",
+    "stage7": "Stage 7: 2.5 - deriving and using formulae",
+    "stage8": "Stage 8: 2.6 - deriving and using formulae",
+    "references": "Y7CP - 2.5 (pages 28-29) "
+  },
+  {
+    "lesson": 14,
+    "code": "2.3.3",
+    "title": "Substitution",
+    "sow": "Substitution",
+    "stage7": "Stage 7: 2.5 / functions review",
+    "stage8": "Stage 8: 2.6 - using formulae with substitution",
+    "references": "Y8CP - 2.6 (pages 27-29)"
+  },
+  {
+    "lesson": 15,
+    "code": "2.3.4",
+    "title": "Forming & Solving Equations",
+    "sow": "Forming and solving equations",
+    "stage7": "Stage 7: 9.3 - constructing and solving equations",
+    "stage8": "Stage 8: 9.3 - constructing and solving equations",
+    "references": "Teacher's notes/DFM Year 7 course; Teacher's notes/DFM Year 7 course"
+  },
+  {
+    "lesson": 16,
+    "code": "3.1.1",
+    "title": "Simplifying & Equivalent Fractions",
+    "sow": "Writing fractions in its simplest form and equivalent fractions (recap only)",
+    "stage7": "Stage 7: 7.1-7.2 - simplifying / equivalence",
+    "stage8": "Stage 8: 7.1 - equivalent fractions, decimals and percentages",
+    "references": "Y7CP - 7.1 (pages 73-74); Teacher's notes"
+  },
+  {
+    "lesson": 17,
+    "code": "3.1.2",
+    "title": "Fractions of Another Quantity",
+    "sow": "Express one quantity as a fraction of another",
+    "stage7": "Stage 7: Unit 7 fraction reasoning",
+    "stage8": "Stage 8: 7.1-7.5 fraction reasoning",
+    "references": "Teacher's notes/DFM Year 7 course; Teacher's notes/DFM Year 7 course"
+  },
+  {
+    "lesson": 18,
+    "code": "3.1.3",
+    "title": "Fractions of Amounts",
+    "sow": "Finding fractions of an amount (recap only)",
+    "stage7": "Stage 7: 7.6 - fractions of a quantity",
+    "stage8": "Stage 8: 7.5 - fractions of a quantity",
+    "references": "Y7CP - 7.6 (page 82); Y8CP - 7.5 (page 77); Y7CP - 7.6 (page 82); Y8CP - 7.5 (page 77)"
+  },
+  {
+    "lesson": 19,
+    "code": "3.1.4",
+    "title": "Mixed & Improper Fractions",
+    "sow": "Converting between mixed number and improper fractions (recap only)",
+    "stage7": "Stage 7: 7.4 - improper fractions / mixed numbers",
+    "stage8": "Stage 8: Unit 7 review - mixed fraction fluency",
+    "references": "Y7CP - 7.4 (page 80)"
+  },
+  {
+    "lesson": 20,
+    "code": "3.1.5",
+    "title": "Adding & Subtracting Fractions",
+    "sow": "Addition and subtraction of fractions and mixed numbers",
+    "stage7": "Stage 7: 7.5 - adding / subtracting fractions",
+    "stage8": "Stage 8: 7.4 - adding / subtracting fractions",
+    "references": "No mixed numbers; Y7CP - 7.5 (page 81); Y8CP - 7.4 (pages 75-76); Y8CP - 7.4 (pages 75-76); Y8CP - 7.4 (pages 75-76)"
+  },
+  {
+    "lesson": 21,
+    "code": "3.1.6",
+    "title": "Multiplying & Dividing Fractions",
+    "sow": "Multiplication and division of fractions",
+    "stage7": "Stage 7: Unit 7 multiplicative fraction foundations",
+    "stage8": "Stage 8: 7.6-7.8 - multiplying / dividing fractions",
+    "references": "Y8CP - 7.8 (pages 80-81); Y8CP - 7.6 (page 78); Y8CP - 7.7 (page 79); Teacher's notes/DFM Year 7 course for questions with mixed numbers"
+  },
+  {
+    "lesson": 22,
+    "code": "3.2.1",
+    "title": "Decimal Addition & Subtraction",
+    "sow": "Addition and subtraction of decimals",
+    "stage7": "Stage 7: 3.5 - adding / subtracting decimals",
+    "stage8": "Stage 8: 3.4 - adding / subtracting decimals",
+    "references": "Y7CP - 3.5 (pages 38-39); Y8CP - 3.4 (page 37)"
+  },
+  {
+    "lesson": 23,
+    "code": "3.2.2",
+    "title": "Powers of 10",
+    "sow": "Multiply and divide by powers of 10",
+    "stage7": "Stage 7: 3.2 - x / ÷ 10,100,1000",
+    "stage8": "Stage 8: 3.1 - x / ÷ 0.1 and 0.01",
+    "references": "Y7CP - 3.2 (pages 33-34); Y8CP - 3.1 (pages 32-33)"
+  },
+  {
+    "lesson": 24,
+    "code": "3.2.3",
+    "title": "Decimal Multiplication & Division",
+    "sow": "Multiply and divide decimals",
+    "stage7": "Stage 7: 3.6-3.7 - decimal multiplication / division",
+    "stage8": "Stage 8: 3.5-3.7 - decimal multiplication / division",
+    "references": "Y7CP - 3.6 (page 40); Y7CP - 3.7 (page 41); Y8CP - 3.5 (page 38)"
+  },
+  {
+    "lesson": 25,
+    "code": "3.3.1",
+    "title": "Percentages of Amounts",
+    "sow": "Percentage of an amount",
+    "stage7": "Stage 7: 11.1-11.2 - percentages",
+    "stage8": "Stage 8: 11.1 - calculating percentages",
+    "references": "Y7CP - 11.1 (pages 113-114); Y7CP - 11.2 (page 115); Y8CP - 11.1 (pages 111-112)"
+  },
+  {
+    "lesson": 26,
+    "code": "3.3.2",
+    "title": "Percentage Increase & Decrease",
+    "sow": "Increase and decrease by percentage",
+    "stage7": "Stage 7: Unit 11 percentage foundations",
+    "stage8": "Stage 8: 11.2 - percentage increases / decreases",
+    "references": "Y8CP - 11.2 (pages 113-114)"
+  },
+  {
+    "lesson": 27,
+    "code": "3.3.3",
+    "title": "Comparing with Percentages",
+    "sow": "Expressing two quantities as a percentage and comparing quantities",
+    "stage7": "Stage 7: 11.3 - comparing quantities",
+    "stage8": "Stage 8: 11.3-11.4 - finding / using percentages",
+    "references": "Y7CP - 11.3 (pages 116-117); Y8CP - 11.3 (pages 115-116)"
+  },
+  {
+    "lesson": 28,
+    "code": "3.4.1",
+    "title": "Fractions, Decimals & Percentages",
+    "sow": "Converting between percentages, fractions and decimals",
+    "stage7": "Stage 7: 7.2 - equivalent FDP",
+    "stage8": "Stage 8: 7.1-7.2 - equivalent FDP / fraction to decimal",
+    "references": "Y7CP - 7.2 (pages 75-77); Y8CP - 7.2 (page 73); Teacher's notes/DFM Year 7 course"
+  },
+  {
+    "lesson": 29,
+    "code": "3.4.2",
+    "title": "Ordering FDP",
+    "sow": "Ordering fractions, decimals and percentages",
+    "stage7": "Stage 7: 7.3 & Unit 3 - comparing fractions / decimals",
+    "stage8": "Stage 8: 7.3 & 3.2 - ordering fractions / decimals",
+    "references": "Teacher's notes/DFM Year 7 course"
+  },
+  {
+    "lesson": 30,
+    "code": "4.1",
+    "title": "2D Shape Properties",
+    "sow": "Properties of 2D shapes (special triangles and quadrilaterals)",
+    "stage7": "Stage 7: 8.1 & 8.4 - 2D shapes / polygon properties",
+    "stage8": "Stage 8: 8.3 - classifying quadrilaterals",
+    "references": "Y7CP - 8.1 (pages 87-88); Y8CP - 8.3 (pages 88-89)"
+  },
+  {
+    "lesson": 31,
+    "code": "4.2.1",
+    "title": "Line Symmetry",
+    "sow": "Lines of symmetry in 2D shapes",
+    "stage7": "Stage 7: 8.2 - line symmetry",
+    "stage8": "Stage 8: 8.2 - symmetry of 2D shapes",
+    "references": "Y7CP - 8.2 (pages 89-90)"
+  },
+  {
+    "lesson": 32,
+    "code": "4.2.2",
+    "title": "Rotational Symmetry",
+    "sow": "Rotational symmetry",
+    "stage7": "Stage 7: 8.3-8.4 - rotational symmetry",
+    "stage8": "Stage 8: 8.2 - symmetry of 2D shapes",
+    "references": "Y7CP - 8.3 (91-92); Y8CP - 8.2 (86-87); Y7CP - 8.1 (pages 87-88) Qu 3; Y7CP - 8.4 (pages 93-95); Teacher's notes/DFM Year 7 course"
+  },
+  {
+    "lesson": 33,
+    "code": "4.3.1",
+    "title": "Types of Angles",
+    "sow": "Types of angles",
+    "stage7": "Stage 7: 5.1 - labelling / estimating angles",
+    "stage8": "Stage 8: 5.2 - explaining angle properties",
+    "references": "Y7CP - 5.1 (pages 54-55)"
+  },
+  {
+    "lesson": 34,
+    "code": "4.3.2",
+    "title": "Drawing & Measuring Angles",
+    "sow": "Draw and measure angles (recap only)",
+    "stage7": "Stage 7: 5.2 - drawing / measuring angles",
+    "stage8": "Stage 8: 5.2 - angle properties and accurate diagrams",
+    "references": "Y7CP - 5.2 (pages 56-57)"
+  },
+  {
+    "lesson": 35,
+    "code": "4.3.3",
+    "title": "Angles on Lines & Around a Point",
+    "sow": "Angles on a straight line and at a point",
+    "stage7": "Stage 7: 5.3-5.4 - calculating / solving angles",
+    "stage8": "Stage 8: 5.2-5.3 - angle properties / problems",
+    "references": "Y7CP - 5.3 (pages 58-59); Y7CP - 5.4 (pages 60-61); Y8CP - 5.1 (pages 51-53); Y8CP - 5.2 (pages 54-56); Y8CP - 5.3 (pages 57-59); ; Teacher's notes/DFM Year 7 course"
+  },
+  {
+    "lesson": 36,
+    "code": "4.3.4",
+    "title": "Angles in Triangles",
+    "sow": "Angles in a triangle",
+    "stage7": "Stage 7: 5.3-5.4 - triangle angle problems",
+    "stage8": "Stage 8: 5.2-5.3 - angle properties / problems",
+    "references": "School SOW objective; linked Cambridge Stage 7 and Stage 8 sections shown above."
+  },
+  {
+    "lesson": 37,
+    "code": "4.3.5",
+    "title": "Angles in Quadrilaterals",
+    "sow": "Angles in a quadrilateral",
+    "stage7": "Stage 7: 5.4 & 8.4 - quadrilateral angle reasoning",
+    "stage8": "Stage 8: 5.2-5.3 & 8.3 - quadrilateral reasoning",
+    "references": "School SOW objective; linked Cambridge Stage 7 and Stage 8 sections shown above."
+  },
+  {
+    "lesson": 38,
+    "code": "4.3.6",
+    "title": "Angles in Parallel Lines",
+    "sow": "Angles in a parallel lines",
+    "stage7": "Stage 7: Unit 5 angle reasoning",
+    "stage8": "Stage 8: 5.1-5.3 - parallel lines / angle problems",
+    "references": "School SOW objective; linked Cambridge Stage 7 and Stage 8 sections shown above."
+  },
+  {
+    "lesson": 39,
+    "code": "5.2.1",
+    "title": "Term-to-Term Sequences",
+    "sow": "Term-to-term rule",
+    "stage7": "Stage 7: 2.1-2.2 - generating sequences",
+    "stage8": "Stage 8: 2.1-2.2 - generating / finding sequence rules",
+    "references": "Y7CP - 2.1 (pages 20-21)"
+  },
+  {
+    "lesson": 40,
+    "code": "5.2.1",
+    "title": "The nth Term",
+    "sow": "nth term rule",
+    "stage7": "Stage 7: 2.2 - sequence patterns",
+    "stage8": "Stage 8: 2.2-2.3 - rules and nth term",
+    "references": "Y7CP - 2.2 (pages 22-23); Y8CP - 2.1 (pages 19-20); Y8CP - 2.3 (pages (23-24); Y8CP - 2.2 (pages 21-22); Teacher's notes"
+  },
+  {
+    "lesson": 41,
+    "code": "6.1.1",
+    "title": "Metric Units",
+    "sow": "Metric units for length, weight and capacity (recap only):",
+    "stage7": "Stage 7: 4.1-4.3 - metric units / scales",
+    "stage8": "Stage 8: 4.1 - choosing suitable units",
+    "references": "Y7CP - 4 (pages 46-51)"
+  },
+  {
+    "lesson": 42,
+    "code": "6.1.2",
+    "title": "Area Unit Conversions",
+    "sow": "Converting between metric units for area",
+    "stage7": "Stage 7: 18.1 - area units",
+    "stage8": "Stage 8: Unit 17 measurement extension",
+    "references": "Y7CP - 18.1 (page 170)"
+  },
+  {
+    "lesson": 43,
+    "code": "6.2.1",
+    "title": "Area & Perimeter",
+    "sow": "Area and perimeter of a square, rectangle and triangle, parallelogram and trapezium (Include mixed units)",
+    "stage7": "Stage 7: 18.2 - rectangle area / perimeter",
+    "stage8": "Stage 8: 17.1-17.2 - triangles, parallelograms, trapezia",
+    "references": "Y7CP - 18.2 (pages 171-172); Y8CP - 17.1 (page 166); Y8CP - 17.2(page 168); Teacher's notes/YEar 7 DFM Course"
+  },
+  {
+    "lesson": 44,
+    "code": "6.2.2",
+    "title": "Compound Area & Perimeter",
+    "sow": "Area and perimeter of compound shapes",
+    "stage7": "Stage 7: 18.3 - compound shapes",
+    "stage8": "Stage 8: 17.4 - compound shapes",
+    "references": "Y7CP - 18.3 (pages 173-174); Y8CP - 17.4 (pages 171-172); Teacher's notes/YEar 7 DFM Course"
+  },
+  {
+    "lesson": 45,
+    "code": "6.3.1",
+    "title": "3D Shape Properties",
+    "sow": "Properties of 3D shapes",
+    "stage7": "Stage 7: 8.1 - recognising solids",
+    "stage8": "Stage 8: 8.4 & 17.6 - nets / solids",
+    "references": "Y7CP - 8.2 (page 88)"
+  },
+  {
+    "lesson": 46,
+    "code": "6.3.2",
+    "title": "Volume of Cuboids",
+    "sow": "Volume of cubes and cuboids (include mixed units).",
+    "stage7": "Stage 7: 18.4 - cuboid volume",
+    "stage8": "Stage 8: 17.5 - cuboid volume and surface area",
+    "references": "Y7CP - 18.4 (pages 175-176); Y8CP - 17.5 (pages 173-174); Teacher's notes/YEar 7 DFM Course"
+  },
+  {
+    "lesson": 47,
+    "code": "6.3.3",
+    "title": "Surface Area",
+    "sow": "Surface area of cubes and cuboids",
+    "stage7": "Stage 7: 18.5 - surface area",
+    "stage8": "Stage 8: 17.5-17.6 - surface area / nets",
+    "references": "Y7CP - 18.5 (pages 177-178); Y8CP - 17.5 (pages 173-174); Teacher's notes/YEar 7 DFM Course"
+  },
+  {
+    "lesson": 48,
+    "code": "7.1.1",
+    "title": "Simplifying Ratios",
+    "sow": "Ratio notation, simplifying and equivalent ratios",
+    "stage7": "Stage 7: 14.1 - simplifying ratios",
+    "stage8": "Stage 8: 14.1 - simplifying ratios",
+    "references": "Y7CP - 7.1 (pages 136-137); Y8CP - 14.1 (pages 141-142)"
+  },
+  {
+    "lesson": 49,
+    "code": "7.1.2",
+    "title": "Sharing in a Ratio",
+    "sow": "Sharing in a ratio (2 or more parts)",
+    "stage7": "Stage 7: 14.2 - sharing in a ratio",
+    "stage8": "Stage 8: 14.2 - sharing in a ratio",
+    "references": "Y7CP - 7.1 (pages 138-139); Y8CP - 14.4 (pages 143-144)"
+  },
+  {
+    "lesson": 50,
+    "code": "7.2.1",
+    "title": "Unitary Method",
+    "sow": "Unitary method",
+    "stage7": "Stage 7: 14.3 - direct proportion / unitary method",
+    "stage8": "Stage 8: 14.3 - solving proportion problems",
+    "references": "Y7CP - 7.1 (pages 140-141)"
+  },
+  {
+    "lesson": 51,
+    "code": "7.2.1",
+    "title": "Direct Proportion",
+    "sow": "Ratio and direct proportion",
+    "stage7": "Stage 7: 14.3 - direct proportion",
+    "stage8": "Stage 8: 14.3 - proportion problem solving",
+    "references": "Teacher's notes/Year 7 DFM course"
+  },
+  {
+    "lesson": 52,
+    "code": "8.1.1",
+    "title": "Types of Data",
+    "sow": "Different types of data",
+    "stage7": "Stage 7: 6.1-6.2 - planning / collecting data",
+    "stage8": "Stage 8: 6.2 - types of data",
+    "references": "Y7CP - 6.1 (pages 63-65); Y8P - 6.2 (page 65)"
+  },
+  {
+    "lesson": 53,
+    "code": "8.1.2",
+    "title": "Collecting Data",
+    "sow": "Collecting data",
+    "stage7": "Stage 7: 6.1-6.2 - planning / collecting data",
+    "stage8": "Stage 8: 6.1-6.2 - collecting / types of data",
+    "references": "Y7CP - 6.1 (pages 64-65); Y7CP - 6.2 (page 67); Y78P - 6.1 (page 63-64)"
+  },
+  {
+    "lesson": 54,
+    "code": "8.2.1",
+    "title": "Representing & Interpreting Data",
+    "sow": "Displaying and interpreting data (tally chart, frequency table, two-way table, pictogram, bar chart (dual and compound), pie chart, frequency polygon and frequency diagram)",
+    "stage7": "Stage 7: 19.1-19.3 - charts / interpretation",
+    "stage8": "Stage 8: 18.1-18.5 - diagrams / conclusions",
+    "references": "Y7CP - 19.1 (pages 183-184); Y7CP - 19.2 (pages 185-186); Y7CP -  19.3 (pages 188-189); Y8CP - 18.1 (pages 180-181); Y8CP - 18.2 (page 183); Y8CP - 18.5 (pages 189-190)"
+  },
+  {
+    "lesson": 55,
+    "code": "8.2.2",
+    "title": "Averages & Range",
+    "sow": "Averages from raw data (mean, mode, median and range)",
+    "stage7": "Stage 7: 10.1-10.3 - average, range, distributions",
+    "stage8": "Stage 8: 10.1 & 10.3 - statistics / comparing distributions",
+    "references": "Y7CP - 10.1 (pages 105-106); Y7CP - 10.2 (pages 107-108)"
+  },
+  {
+    "lesson": 56,
+    "code": "8.2.3",
+    "title": "Averages from Frequency Tables",
+    "sow": "Averages from a frequency table (ungrouped frequency tables only)",
+    "stage7": "Stage 7: 6.3 & 10.2 - frequency tables / mean",
+    "stage8": "Stage 8: 6.3 & 10.1 - frequency tables / statistics",
+    "references": "Y8CP - 10.1 (pages 103-104)"
+  },
+  {
+    "lesson": 57,
+    "code": "9.1.1",
+    "title": "Probability Scale",
+    "sow": "Probability vocabulary and scales",
+    "stage7": "Stage 7: 16.1 - probability scale",
+    "stage8": "Stage 8: 15.1 - complementary probability",
+    "references": "Y7CP - 16.1 (page 153)"
+  },
+  {
+    "lesson": 58,
+    "code": "9.1.2",
+    "title": "Equally Likely Outcomes",
+    "sow": "Equally likely outcomes",
+    "stage7": "Stage 7: 16.2 - equally likely outcomes",
+    "stage8": "Stage 8: 15.2-15.3 - equally likely / listing outcomes",
+    "references": "Y7CP - 16.2 (pages 154-155); Y8CP - 15.2 (pages 150-151)"
+  },
+  {
+    "lesson": 59,
+    "code": "9.1.3",
+    "title": "Mutually Exclusive Events",
+    "sow": "Mutually exclusive outcomes",
+    "stage7": "Stage 7: 16.3 - mutually exclusive outcomes",
+    "stage8": "Stage 8: 15.1-15.3 - complementary / outcome reasoning",
+    "references": "Y7CP - 16.3 (pages 156-157); Y8CP - 15.1 (pages 148-149)"
+  },
+  {
+    "lesson": 60,
+    "code": "9.1.4",
+    "title": "Relative Frequency",
+    "sow": "Relative frequency and estimating probabilities",
+    "stage7": "Stage 7: 16.4 - estimating probabilities",
+    "stage8": "Stage 8: 15.4 - experimental / theoretical probabilities",
+    "references": "Y7CP - 16.4 (pages 158-160)"
+  },
+  {
+    "lesson": 61,
+    "code": "10.1.1",
+    "title": "Coordinates in Four Quadrants",
+    "sow": "Drawing axis and plotting coordinates (4 quadrants)",
+    "stage7": "Stage 7: 13.1 - plotting coordinates",
+    "stage8": "Stage 8: 13.1 & 13.3 - graph coordinates / midpoint",
+    "references": "Y7CP - 13.1 (page 130)"
+  },
+  {
+    "lesson": 62,
+    "code": "10.1.2",
+    "title": "Coordinate Problems",
+    "sow": "Problem solving with coordinates",
+    "stage7": "Stage 7: 13.1 & Unit 17 - coordinates / transformations",
+    "stage8": "Stage 8: 13.3 - midpoint and coordinate reasoning",
+    "references": "Teacher's notes/Year 7 DFM Course; Teacher's notes/Year 7 DFM Course; Y8CP - 13.3 (page 135)"
+  },
+  {
+    "lesson": 63,
+    "code": "10.2.1",
+    "title": "Horizontal & Vertical Lines",
+    "sow": "Lines parallel to the x or y axis (x= and y=).",
+    "stage7": "Stage 7: 13.2 - lines parallel to axes",
+    "stage8": "Stage 8: 13.1-13.2 - equations / straight lines",
+    "references": "Y7CP - 13.2 (page 131)"
+  },
+  {
+    "lesson": 64,
+    "code": "10.2.2",
+    "title": "Straight-Line Graphs",
+    "sow": "Plotting a straight line from a table of values",
+    "stage7": "Stage 7: 13.3 - other straight lines",
+    "stage8": "Stage 8: 13.1-13.2 - equations / y=mx+c",
+    "references": "Y7CP - 13.3 (pages 133-134); Y8CP - 13.1 (page 131); Y8CP - 13.2 (page 133)"
+  },
+  {
+    "lesson": 65,
+    "code": "10.2.3",
+    "title": "Real-Life Graphs",
+    "sow": "Graphs in real-life contexts",
+    "stage7": "Stage 7: 15.3 - real-life graphs",
+    "stage8": "Stage 8: 13.4 - graphs in real-life contexts",
+    "references": "Y8CP - 13.4 (pages 136-138)"
+  },
+  {
+    "lesson": 66,
+    "code": "11.1.1",
+    "title": "Solving Inequalities",
+    "sow": "Solving inequalities",
+    "stage7": "Stage 7: Unit 9 algebraic solving methods",
+    "stage8": "Stage 8: 9.3 algebraic solving methods, extended to inequalities",
+    "references": "School SOW objective; linked Cambridge Stage 7 and Stage 8 sections shown above."
+  },
+  {
+    "lesson": 67,
+    "code": "12.1",
+    "title": "Construction Skills",
+    "sow": "Construction",
+    "stage7": "Stage 7: Unit 12 - constructions",
+    "stage8": "Stage 8: Unit 12 - constructions",
+    "references": "School SOW objective; linked Cambridge Stage 7 and Stage 8 sections shown above."
+  },
+  {
+    "lesson": 68,
+    "code": "12.1.1",
+    "title": "Parallel & Perpendicular Lines",
+    "sow": "Draw parallel and perpendicular lines.",
+    "stage7": "Stage 7: 12.2 - perpendicular / parallel lines",
+    "stage8": "Stage 8: Unit 12 construction accuracy",
+    "references": "School SOW objective; linked Cambridge Stage 7 and Stage 8 sections shown above."
+  },
+  {
+    "lesson": 69,
+    "code": "12.1.2",
+    "title": "Perpendicular Bisectors",
+    "sow": "Draw a perpendicular bisector",
+    "stage7": "Stage 7: Unit 12 construction foundations",
+    "stage8": "Stage 8: 12.2 - perpendicular bisector",
+    "references": "School SOW objective; linked Cambridge Stage 7 and Stage 8 sections shown above."
+  },
+  {
+    "lesson": 70,
+    "code": "12.1.3",
+    "title": "Angle Bisectors",
+    "sow": "Draw an angle bisector",
+    "stage7": "Stage 7: Unit 12 construction foundations",
+    "stage8": "Stage 8: 12.3 - angle bisector",
+    "references": "School SOW objective; linked Cambridge Stage 7 and Stage 8 sections shown above."
+  }
+]
