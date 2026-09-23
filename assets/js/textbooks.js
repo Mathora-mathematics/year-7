@@ -49,6 +49,7 @@ async function getPdf(stage){
   if(pdfCache.has(stage)) return pdfCache.get(stage);
   const rec=await getRecord(stage);
   if(!rec?.data || !window.pdfjsLib) return null;
+  if(window.pdfjsLib.GlobalWorkerOptions && !window.pdfjsLib.GlobalWorkerOptions.workerSrc) window.pdfjsLib.GlobalWorkerOptions.workerSrc='https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
   const bytes=rec.data.slice ? rec.data.slice(0) : rec.data;
   const doc=await window.pdfjsLib.getDocument({data:bytes}).promise;
   pdfCache.set(stage,doc);
